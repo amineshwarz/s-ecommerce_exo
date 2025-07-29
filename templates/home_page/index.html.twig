@@ -3,11 +3,44 @@
 {% block title %}Hello HomePageController!{% endblock %}
 
 {% block body %}
+<nav class="navbar navbar-expand-lg  bg-primary bg-opacity-50 border-bottom shadow-sm fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="{{ path('app_home_page') }}">
+            <img src="/img/logoV2.png" alt="logo" width="120" height="50">
+        </a>
 
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }} des ARNAUDLANDS! ✅</h1>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+              {% if app.user %}
+
+                <li class="nav-item">
+                    Vous êtes connecté en tant que {{ app.user.firstName }}      ||
+                </li>
+                <li class="nav-item">
+                    <a href="{{ path('app_logout') }}">  Déconnexion</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link nav-link btn btn-light text-white " href="{{ path('app_register') }}">Inscription</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link btn btn-light text-white " href="{{ path('app_login') }}">Connexion</a>
+                </li>
+              {% endif %}
+            </ul>
+        </div>
+
+    </div>
+</nav>
+<div class="text-center " >
+    <h1 class="text-center " style="margin-top:3em;">Bienvenue sur la page d'accueil</h1>
+    <a class="btn btn-primary" href="{{ path('app_category') }}">les categories</a>
 </div>
-    <a href="{{ path('app_login') }}" class= 'btn btn-primary' style="width: 10rem;">Connexion</a>
-    <a href="{{ path('app_register') }}" class= 'btn btn-primary' style="width: 10rem;">Inscription</a>
+
+
 {% endblock %}

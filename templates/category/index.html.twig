@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CategoryController!{% endblock %}
+
+{% block body %}
+{# ---------------------------------naveBar--------------------------- #}
+<nav class="navbar navbar-expand-lg  bg-primary bg-opacity-50 border-bottom shadow-sm fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="{{ path('app_home_page') }}">
+            <img src="/img/logoV2.png" alt="logo" width="120" height="50">
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+              {% if app.user %}
+                <li class="nav-item">
+                    Vous êtes connecté en tant que {{ app.user.FirstName }}      ||
+                </li>
+                <li class="nav-item">
+                    <a href="{{ path('app_logout') }}">  Déconnexion</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link nav-link btn btn-light text-white " href="{{ path('app_register') }}">Inscription</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link btn btn-light text-white " href="{{ path('app_login') }}">Connexion</a>
+                </li>
+              {% endif %}
+            </ul>
+        </div>
+
+    </div>
+</nav>
+{# ---------------------------------le tableau d'affichage--------------------------- #}
+
+<div class="example-wrapper">
+    <h1 class="text-center " style="margin-top:3em;">Vos categories</h1>
+    <div class="categoryCard">
+    {% include 'layouts/_flash_message.html.twig' %} 
+        <table class="table table-striped-columns">
+            <thead>
+                <tr>
+                    <th scope="col">Nom de la catégorie</th>
+                    <th scope="col">Action</th>
+                </tr>
+                
+            </thead>
+            <tbody>
+            {% for category in category %}
+                <tr>
+                    <th scope="row"> {{category.name}}</th>
+                    <td>
+                        <a href="{{ path('app_category_update', {'id': category.id}) }}" class= 'btn btn-warning'>Modifier</a>
+                        <a href="{{ path('app_category_delete', {'id': category.id}) }}" class= 'btn btn-danger' onclick="return confirm('Es-tu sûr de vouloir supprimer cet élément ?');">Supprimer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-between mt-4">
+            <a class="btn btn-primary" href="{{ path('app_category_new') }}">Ajouter une categorie</a>
+            <a href="{{ path('app_home_page') }}" class="btn btn-light border border-primary">Retour</a>
+        </div>
+    </div>
+
+    
+
+
+
+    
+</div>
+{% endblock %}

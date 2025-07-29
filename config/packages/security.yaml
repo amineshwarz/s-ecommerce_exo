@@ -17,9 +17,12 @@ security:
             lazy: true
             provider: app_user_provider
             form_login:
+                enable_csrf: true
+                # csrf_parameter: '_csrf_token'
+                # csrf_token_id: 'intention'
                 login_path: app_login
                 check_path: app_login
-                enable_csrf: true
+
             logout:
                 path: app_logout
                 # where to redirect after logout
