@@ -14,7 +14,7 @@
             <thead>
                 <tr>
                     <th scope="col">Nom</th>
-                    <th scope="col">Prenom</th>
+                    <th scope="col">Prénom</th>
                     <th scope="col">Email</th>
                     <th scope="col">Role</th>
                     <th scope="col">Action</th>
@@ -28,11 +28,19 @@
                     <th scope="row" class="fw-lighter"> {{user.email}}</th>
                     <th scope="row" class="fw-lighter"> 
                         {% for role in user.roles %}
-                            {{ role|capitalize }}
+                            {% if role == 'ROLE_ADMIN' %}
+                                <button class="btn btn-xs btn-danger" disabled> Admin </button>
+                            {% elseif role == 'ROLE_USER' %}
+                                <button class="btn btn-xs btn-info" disabled> User</button>
+                            {% elseif role == 'ROLE_EDITOR' %}
+                                <button class="btn btn-xs btn-success" disabled> Éditeur</button>
+                            {% else %}
+                                {{ role|capitalize }}
+                            {% endif %}
                         {% endfor %}
                     </th> 
                     <td class="text-center">
-                      {% if ('ROLE_ADMIN' in user.roles) == false %}
+                      {% if ('ROLE_ADMIN' in app.user.roles)  %}
                         <a href="{{ path('app_user_update', {'id': user.id}) }}" class= 'btn btn-sm '>✏️</a> 
                         <a href="" class= 'btn btn-sm ' onclick="return confirm('Es-tu sûr de vouloir supprimer cet élément ?');">❌</a>
                       {% endif %}                     

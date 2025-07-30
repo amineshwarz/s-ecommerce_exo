@@ -22,9 +22,10 @@ class UserUpdateFormType extends AbstractType
         if ($options['allow_roles_update'] ?? false){
             $builder->add('roles', ChoiceType::class, [
                 'label' => 'Rôles Utilisateur',
-                'choices' => [   
+                'choices' => [  
+                    'Administrateur' => 'ROLE_ADMIN', 
                     'Editeur' => 'ROLE_EDITOR',
-                    'User' => 'ROLE_USER',
+                    'Utilisateur' => 'ROLE_USER',
                     // Autres rôles...
                 ],
                 'multiple' => true,
