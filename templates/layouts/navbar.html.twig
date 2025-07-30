@@ -1,0 +1,52 @@
+<nav class="navbar navbar-expand-lg  bg-primary bg-opacity-50 border-bottom shadow-sm fixed-top">
+    <div class="container">
+{#--------------------------------- le logo de de la nav bar ----------------------------------- #}
+        <a class="navbar-brand" href="{{ path('app_home_page') }}">
+            <img src="/img/logoV2.png" alt="logo" width="120" height="50">
+        </a>
+{#------------------------------------ le bouton respensive ----------------------------------- #}
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+{#-------------------------------- les liens de la nav bar Ul Li ----------------------------------- #}
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        {% if app.user %}
+            <div class="mx-auto text-center">Vous êtes connecté en tant que {{ app.user.FirstName }}</div>
+        {% endif %}   
+
+            <ul class="navbar-nav">
+            {% if is_granted("ROLE_ADMIN") %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Utilisateur</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{ path('app_user') }}">Voir les utilisateurs</a></li>
+                        {# <li><a class="dropdown-item" href="{{ path('app_user_new') }}">Ajouter un user</a></li> #}
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Catégories
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{ path('app_category') }}">Voir les catégories</a></li>
+                        <li><a class="dropdown-item" href="{{ path('app_category_new') }}">Ajouter une catégorie</a></li>
+                    </ul>
+                </li>
+            {% endif %}
+            {% if app.user %}
+                <li class="nav-item">
+                    <a href="{{ path('app_logout') }}" class="btn btn-sm btn-outline-primary">  Déconnexion</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="btn btn-sm btn-outline-primary" href="{{ path('app_register') }}">Inscription</a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-sm btn-primary" href="{{ path('app_login') }}">Connexion</a>
+                </li>
+            {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

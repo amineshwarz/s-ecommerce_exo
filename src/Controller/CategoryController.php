@@ -14,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class CategoryController extends AbstractController
 {
-    #[Route('/category', name: 'app_category')]
+    #[Route('/admin/category', name: 'app_category')]
     public function index(CategorieRepository $repo, ): Response
     {
         $category= $repo -> findall();
@@ -24,7 +24,7 @@ final class CategoryController extends AbstractController
         ]);
     }
 
-    #[Route('/category/new', name: 'app_category_new')]
+    #[Route('/admin/category/new', name: 'app_category_new')]
     public function addCategory(EntityManagerInterface $em, Request $request ): Response
     {
         $category = new Categorie();
@@ -44,7 +44,7 @@ final class CategoryController extends AbstractController
         ]);
     }
 
-    #[Route('/categoryUpdate{id}', name: 'app_category_update')]
+    #[Route('/admin/categoryUpdate{id}', name: 'app_category_update')]
     public function updateCategory($id, EntityManagerInterface $em, Request $request, Categorie $category): Response
     {
         
@@ -63,7 +63,7 @@ final class CategoryController extends AbstractController
             
         ]);
     }
-    #[Route('/CategorieDelete/{id}', name: 'app_category_delete')]
+    #[Route('/admin/CategorieDelete/{id}', name: 'app_category_delete')]
     public function deleteForm($id, EntityManagerInterface $entityManager): Response
     {
         $category = $entityManager->getRepository(Categorie::class)->find($id);
