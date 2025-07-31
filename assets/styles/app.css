@@ -2,7 +2,16 @@
      --green-700: #6c1469;  
   } */
 
-
+.parallax {
+    /* background-image: url('/img/bg.jpg'); */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    backdrop-filter: blur(15px);
+    backdrop-filter: opacity(50%);
+}
 
 /*----------------Style pour Inscription et Connexion-----------------*/
 
@@ -29,24 +38,26 @@
     margin: 30px auto;
     padding: 32px 24px;
     border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.10);
-    background: #d8ebff;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.255);
+    background: #d4f9ff;
+    margin-top: 8em;
 }
 .login-card {
     max-width: 430px;
     margin: 40px auto;
     padding: 36px 28px;
     border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.10);
-    background: #d8ebff;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.255);
+    background: #d4f9ff;
+    margin-top: 10em;
 }
 .categoryCard{
     max-width: 800px;
     margin: 30px auto;
     padding: 32px 24px;
     border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.10);
-    background: #d8ebff;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.255);
+    background: #d4f9ff;
 }
 @media (min-width: 768px) {
     .name-row {

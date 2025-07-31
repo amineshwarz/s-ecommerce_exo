@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Ajout d'une catégorie{% endblock %}
 
 {% block body %}
-<div class="register-card">
-    <h1 class="mb-4 text-center">Ajouter une categorie</h1>
+<div class="login-card">
+    <h2 class="mb-4 text-center">Ajouter une categorie</h2>
 
     {{ form_start(form) }} 
         {{ form_row(form.name, {'attr': {'class': 'form form-control'}}) }} 
