@@ -6,20 +6,19 @@
 <div class="example-wrapper">
     <h1 class="text-center " style="margin-top:3em;">SubCategory index</h1>
     <div class="categoryCard">
-
-        <table class="table">
+        <table class="table table-striped-columns">
             <thead>
                 <tr>
-                    <th>Nom</th>
-                    <th>Catégorie</th>
-                    <th>Actions</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Catégorie</th>
+                    <th scope="col" class="col-2 text-center">Actions</th>
                 </tr>
             </thead>
             <tbody>
             {% for sub_category in sub_categories %}
                 <tr>
-                    <td>{{ sub_category.name }}</td>
-                    <td>{{ sub_category.category }}</td>
+                    <td scope="row" class="fw-lighter">{{ sub_category.name }}</td>
+                    <td scope="row" class="fw-lighter">{{ sub_category.category }}</td>
                     <td>
                         <a href="{{ path('app_sub_category_edit', {'id': sub_category.id}) }}" class= 'btn btn-sm '>✏️</a>
                         <a href="{{ path('app_sub_category_delete', {'id': sub_category.id}) }}" class= 'btn btn-sm ' onclick="return confirm('Es-tu sûr de vouloir supprimer cet élément ?');">❌</a>
@@ -32,8 +31,9 @@
             {% endfor %}
             </tbody>
         </table>
-
-    <a href="{{ path('app_sub_category_new') }}" class="btn btn-primary" >Create new</a>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <a href="{{ path('app_sub_category_new') }}" class="btn btn-primary" >Ajouter une sous catégorie</a>
+    <a href="{{ path('app_home_page') }}" class="btn btn-outline-primary">Retour</a>
     </div>
 </div>
 {% endblock %}

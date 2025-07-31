@@ -21,7 +21,6 @@
                     <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown">Utilisateur</a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{{ path('app_user') }}">Voir les utilisateurs</a></li>
-                        {# <li><a class="dropdown-item" href="{{ path('app_user_new') }}">Ajouter un user</a></li> #}
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -31,6 +30,14 @@
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{{ path('app_category') }}">Voir les catégories</a></li>
                         <li><a class="dropdown-item" href="{{ path('app_sub_category_index') }}">Voir les sous-catégories</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Produits
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{ path('app_product_index') }}">Voir les Produits</a></li>
                     </ul>
                 </li>
             {% endif %}

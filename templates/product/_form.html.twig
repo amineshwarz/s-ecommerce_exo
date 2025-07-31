@@ -1,0 +1,7 @@
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    <div class="d-flex justify-content-between mt-4">
+        <button class="btn btn-sm btn-primary">{{ button_label|default('Ajouter') }}</button>
+        <a href="{{ path('app_product_index') }}" class="btn btn-sm btn-outline-primary">retour</a>
+    </div> 
+{{ form_end(form) }}
