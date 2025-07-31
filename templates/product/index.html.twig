@@ -13,15 +13,22 @@
                     <th scope="col">Nom</th>
                     <th scope="col">Description</th>
                     <th scope="col" class="text-center">Prix</th>
+                    <th scope="col" class="text-center">image</th>
                     <th scope="col" class="col-2 text-center">Actions</th>
                 </tr>
             </thead>
             <tbody>
             {% for product in products %}
                 <tr>
-                    <td scope="row" class="fw-lighter">{{ product.Name }}</td>
-                    <td scope="row" class="fw-lighter">{{ product.description }}</td>
+                    <td scope="row" class="fw-lighter">                      
+                        <a href="{{ path('app_product_show', {'id': product.id}) }}" class= 'btn btn-sm '>
+                            {{ product.name }}
+                        </a>
+                    </td>
+                    <td scope="row" class="fw-lighter">{{ product.description|slice(0,100) }}</td> {#pour reduit la taille si ya une grand descri #}
                     <td scope="row" class="fw-lighter text-center">{{ product.prix }} €</td>
+                    <td scope="row" class="fw-lighter">{{ product.image}}</td>
+                    {# <td ><img src="{{ product.image }}" alt="image" width="50" height="50"/></td> #}
                     <td>
                         <a href="{{ path('app_product_edit', {'id': product.id}) }}" class= 'btn btn-sm '>✏️</a>
                         <a href="{{ path('app_product_delete', {'id': product.id}) }}" class= 'btn btn-sm ' onclick="return confirm('Es-tu sûr de vouloir supprimer cet élément ?');">❌</a>

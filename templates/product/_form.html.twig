@@ -1,7 +1,19 @@
-{{ form_start(form) }}
+{# {{ form_start(form) }}
     {{ form_widget(form) }}
     <div class="d-flex justify-content-between mt-4">
         <button class="btn btn-sm btn-primary">{{ button_label|default('Ajouter') }}</button>
         <a href="{{ path('app_product_index') }}" class="btn btn-sm btn-outline-primary">retour</a>
     </div> 
+{{ form_end(form) }} #}
+
+
+
+{{ form_start(form) }}
+    {{ form_row(form.Name,{'attr':{'class':'form form-control'}}) }}
+    {{ form_row(form.description,{'attr':{'class':'form form-control'}}) }}
+    {{ form_row(form.prix,{'attr':{'class':'form form-control'}}) }}
+    {{ form_row(form.subcategory,{'attr':{'class':'form form-control'}}) }}
+    {{ form_row(form.image,{'attr':{'class':'form form-control'}}) }}
+    <button class="btn btn-sm btn-primary">{{ button_label|default('Sauvegarder') }}</button>
+    <a href="{{ path('app_product_index') }}" class="btn btn-sm btn-outline-primary">retour</a>
 {{ form_end(form) }}

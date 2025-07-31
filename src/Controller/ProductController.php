@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-#[Route('admin/product')]
+#[Route('editor/product')]
 #[IsGranted('ROLE_ADMIN')]
 final class ProductController extends AbstractController
 {
@@ -33,6 +33,20 @@ final class ProductController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $image = $form->get('image')->getData();
+            if ($image) {
+                // Générer un nom unique pour le fichier
+                $newFilename = uniqid() . '.' . $image->guessExtension();
+
+                // deplacer le fichier dans le dossier configuré via 'photos_directory'
+                $image->move(
+                    $this->getParameter('photos_directory'),
+                    $newFilename
+                );
+
+                // Set the new filename in the user entity
+                $product->setImage($newFilename);
+            }
             $entityManager->persist($product);
             $entityManager->flush();
 
@@ -43,15 +57,16 @@ final class ProductController extends AbstractController
             'product' => $product,
             'form' => $form,
         ]);
+        
     }
 
-    // #[Route('/{id}', name: 'app_product_show', methods: ['GET'])]
-    // public function show(Product $product): Response
-    // {
-    //     return $this->render('product/show.html.twig', [
-    //         'product' => $product,
-    //     ]);
-    // }
+    #[Route('/{id}', name: 'app_product_show', methods: ['GET'])]
+    public function show(Product $product): Response
+    {
+        return $this->render('product/show.html.twig', [
+            'product' => $product,
+        ]);
+    }
 
     #[Route('/{id}/edit', name: 'app_product_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Product $product, EntityManagerInterface $entityManager): Response
