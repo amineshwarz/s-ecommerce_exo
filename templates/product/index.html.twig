@@ -4,15 +4,15 @@
 
 {% block body %}
 <div class="example-wrapper">
-    <h1 class="text-center " style="margin-top:3em;">Product index</h1>
+    <h1 class="text-center " style="margin-top:3em;">Tout les produits</h1>
     <div class="categoryCard">
     {% include 'layouts/_flash_message.html.twig' %} 
         <table class="table table-striped-columns">
             <thead>
                 <tr>
-                    <th scope="col">Name</th>
+                    <th scope="col">Nom</th>
                     <th scope="col">Description</th>
-                    <th scope="col">Prix</th>
+                    <th scope="col" class="text-center">Prix</th>
                     <th scope="col" class="col-2 text-center">Actions</th>
                 </tr>
             </thead>
@@ -21,7 +21,7 @@
                 <tr>
                     <td scope="row" class="fw-lighter">{{ product.Name }}</td>
                     <td scope="row" class="fw-lighter">{{ product.description }}</td>
-                    <td scope="row" class="fw-lighter">{{ product.prix }}</td>
+                    <td scope="row" class="fw-lighter text-center">{{ product.prix }} €</td>
                     <td>
                         <a href="{{ path('app_product_edit', {'id': product.id}) }}" class= 'btn btn-sm '>✏️</a>
                         <a href="{{ path('app_product_delete', {'id': product.id}) }}" class= 'btn btn-sm ' onclick="return confirm('Es-tu sûr de vouloir supprimer cet élément ?');">❌</a>
