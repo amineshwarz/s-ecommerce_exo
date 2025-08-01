@@ -37,7 +37,7 @@ class ProductType extends AbstractType
                         'image/png',
                         'image/gif',
                     ],
-                    'mimeTypesMessage' => 'Please upload a valid image (JPEG, PNG, GIF)',
+                    'mimeTypesMessage' => 'Veuillez télécharger une image valide type (JPG, JPEG, PNG, GIF)',
                     ]),
                 ],
             ])
