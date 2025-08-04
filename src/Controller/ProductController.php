@@ -33,7 +33,7 @@ final class ProductController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $product = new Product();
-        $form = $this->createForm(ProductType::class, $product);
+        $form = $this->createForm(ProductType::class, $product,);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -51,6 +51,7 @@ final class ProductController extends AbstractController
                 // Set the new filename in the user entity
                 $product->setImage($newFilename);
             }
+            // $product->setStock(0); // Initialiser le stock à 0
             $entityManager->persist($product);
             $entityManager->flush();
 
@@ -82,7 +83,7 @@ final class ProductController extends AbstractController
     #[Route('/{id}/edit', name: 'app_product_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Product $product, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(ProductType::class, $product);
+        $form = $this->createForm(ProductType::class, $product,);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -167,8 +168,8 @@ final class ProductController extends AbstractController
     public function stockHistory($id ,ProductRepository $productRepository, AddProductHistoryRepository $addProductHistoryRepository): Response
     {
         $product = $productRepository->find($id);
-        
-        $productaddHistory = $addProductHistoryRepository->findBy(['product' => $product], ['id' => 'DESC']);
+
+        $productaddHistory = $addProductHistoryRepository->findBy(['product' => $product], ['createdAt' => 'DESC']);
 
         // dd($productaddHistory);
         return $this->render('product/addedStockHistory.html.twig', [

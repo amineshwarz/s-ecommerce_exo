@@ -19,7 +19,7 @@ class ProductType extends AbstractType
             ->add('Name')
             ->add('description')
             ->add('prix')
-            ->add('stock')
+            // ->add('stock')
             ->add('subcategory', EntityType::class, [
                 'class' => SubCategory::class,
                 'choice_label' => 'name',
@@ -37,18 +37,22 @@ class ProductType extends AbstractType
                         'image/jpg',
                         'image/png',
                         'image/gif',
+                        'image/webp',
                     ],
-                    'mimeTypesMessage' => 'Veuillez télécharger une image valide type (JPG, JPEG, PNG, GIF)',
+                    'mimeTypesMessage' => 'Veuillez télécharger une image valide type (JPG, JPEG, PNG, GIF, webp)',
                     ]),
                 ],
-            ])
-        ;
+            ]);
+            if (($options['disable_stock'])) {
+                $builder->add('stock');
+            }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Product::class,
+            'disable_stock' => false,
         ]);
     }
 }

@@ -35,7 +35,7 @@ class Product
     private ?string $image = null;
 
     #[ORM\Column]
-    private ?int $stock = null;
+    private ?int $stock = 0;
 
     /**
      * @var Collection<int, AddProductHistory>
