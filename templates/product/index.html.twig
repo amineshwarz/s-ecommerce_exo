@@ -5,13 +5,14 @@
 {% block body %}
 <div class="example-wrapper">
     <h1 class="text-center " style="margin-top:3em;">Tout les produits</h1>
-    <div class="categoryCard">
+    <div class="productCard">
     {% include 'layouts/_flash_message.html.twig' %} 
         <table class="table table-striped-columns">
             <thead>
                 <tr>
                     <th scope="col">Nom</th>
                     <th scope="col">Description</th>
+                    <th scope="col" colspan='2' class="text-center" >Stock</th>
                     <th scope="col" class="text-center">Prix</th>
                     <th scope="col" class="text-center">image</th>
                     <th scope="col" class="col-2 text-center">Actions</th>
@@ -25,13 +26,23 @@
                             {{ product.name }}
                         </a>
                     </td>
-                    <td scope="row" class="fw-lighter">{{ product.description|slice(0,100) }}</td> {#pour reduit la taille si ya une grand descri #}
+                    <td scope="row" class="fw-lighter">{{ product.description|slice(0,100) }} ...</td> {#pour reduit la taille si ya une grand descri #}
+                    <td scope="row" class="fw-lighter text-center">
+                        {% if product.stock > 0 %}
+                            <span>{{ product.stock }}</span>
+                        {% else %}
+                            <span>‼️</span>
+                        {% endif %}
+                        <td scope="row" class="fw-lighter text-center">
+                            <a href="{{ path('app_product_stock_add', {'id': product.id}) }}"class= 'btn btn-sm '>+</a> 
+                        </td>
+                        </td>
                     <td scope="row" class="fw-lighter text-center">{{ product.prix }} €</td>
                     <td scope="row" class="fw-lighter">{{ product.image}}</td>
-                    {# <td ><img src="{{ product.image }}" alt="image" width="50" height="50"/></td> #}
                     <td>
                         <a href="{{ path('app_product_edit', {'id': product.id}) }}" class= 'btn btn-sm '>✏️</a>
                         <a href="{{ path('app_product_delete', {'id': product.id}) }}" class= 'btn btn-sm ' onclick="return confirm('Es-tu sûr de vouloir supprimer cet élément ?');">❌</a>
+                        <a href="{{ path('app_product_stock_add', {'id': product.id}) }}"class= 'btn btn-sm '>+</a> 
                     </td>
                 </tr>
             {% else %}
@@ -42,8 +53,8 @@
             </tbody>
         </table>
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <a href="{{ path('app_product_new') }}" class="btn btn-primary">Ajouter un Produit</a>
-            <a href="{{ path('app_home_page') }}" class="btn btn-outline-primary">Retour</a>
+            <a href="{{ path('app_product_new') }}" class="btn btn-sm btn-primary">Ajouter un Produit</a>
+            <a href="{{ path('app_home_page') }}" class="btn btn-sm btn-outline-primary">Retour</a>
         </div>
     </div>
 </div>

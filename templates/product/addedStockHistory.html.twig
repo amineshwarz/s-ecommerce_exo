@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}History stock{% endblock %}
+
+{% block body %}
+<div class="login-card">
+    <h2 class="mb-4 text-center">PHistory stock</h2>
+    
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Date d'ajout</th>
+                    <th>Quantité</th>
+                    <th>Produit</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for addProductHistory in addProductHistories %}
+                    <tr>
+                        <td>{{ addProductHistory.id }}</td>
+                        <td>{{ addProductHistory.createdAT | date('Y-m-d H:i:s', 'Europe/Paris') }}</td>
+                        <td>{{ addProductHistory.quantity }}</td>
+                        <td>{{ addProductHistory.product.name }}</td>
+
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3">Aucun historique trouvé pour ce produit.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+               
+
+
+    <a href="{{ path('app_product_index') }}">back to list</a>
+
+</div>
+
+{% endblock %}

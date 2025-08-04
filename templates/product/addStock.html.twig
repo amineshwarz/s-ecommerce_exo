@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Product{% endblock %}
+
+{% block body %}
+
+<div class="login-card">
+    <h2 class="mb-4 text-center">Ajouter un Stock pour <strong> {{ product.name }} </strong> </h2>
+    {{ form_start(form) }}
+        {{ form_row(form.quantity,{'attr':{'class':'form form-control'}}) }}
+        <button type="submit" class="btn btn-sm btn-primary">{{ button_label|default('Sauvegarder') }}</button>
+        <a href="{{ path('app_product_index') }}" class="btn btn-sm btn-outline-primary">retour</a>
+{{ form_end(form) }}
+    
+</div>
+
+{% endblock %}

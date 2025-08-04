@@ -59,6 +59,14 @@
     box-shadow: 0 8px 32px rgba(0,0,0,0.255);
     background: #d4f9ff;
 }
+.productCard{
+    width: 80%;
+    margin: 30px auto;
+    padding: 32px 24px;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.255);
+    background: #d4f9ff;
+}
 @media (min-width: 768px) {
     .name-row {
         display: flex;
