@@ -12,8 +12,45 @@
     backdrop-filter: blur(15px);
     backdrop-filter: opacity(50%);
 }
+  /*----------------Style pour page d'acceuil-----------------*/
+  /*-----carte produit-----*/
 
-/*----------------Style pour Inscription et Connexion-----------------*/
+  .card {
+    border-radius: 0 !important;
+    transition: transform 0.2s, box-shadow 0.2s;
+    height: 100%;
+}
+
+.card:hover {
+    transform: translateY(-6px) scale(1.03);
+}
+
+.card-img-top {
+    height: 220px;
+    border-radius: 0 !important;
+    object-fit: cover;
+}
+
+.card-body {
+    min-height: 160px;
+}
+
+.price-tag {
+    font-size: 0.80rem;
+    color: #0d6efd;
+    font-weight: 600;
+}
+/*--------------------------------les Produit---------------------------------*/
+.product-card{
+    width: 90%;
+    margin: 0 auto;
+    padding: 32px 24px;
+    
+    box-shadow: 0 8px 32px rgba(0,0,0,0.255);
+    background: #d4f9ff;
+}
+
+/*----------------Style pour Inscription et Connexion-------------------------*/
 
 .form-control {
     border: none !important;
@@ -59,14 +96,7 @@
     box-shadow: 0 8px 32px rgba(0,0,0,0.255);
     background: #d4f9ff;
 }
-.productCard{
-    width: 80%;
-    margin: 30px auto;
-    padding: 32px 24px;
-    border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.255);
-    background: #d4f9ff;
-}
+
 @media (min-width: 768px) {
     .name-row {
         display: flex;
@@ -91,31 +121,3 @@
   }
 
 
-  /*----------------Style pour page d'acceuil-----------------*/
-  /*-----carte produit-----*/
-
-  .card {
-    border-radius: 0 !important;
-    transition: transform 0.2s, box-shadow 0.2s;
-    height: 100%;
-}
-
-.card:hover {
-    transform: translateY(-6px) scale(1.03);
-}
-
-.card-img-top {
-    height: 220px;
-    border-radius: 0 !important;
-    object-fit: cover;
-}
-
-.card-body {
-    min-height: 160px;
-}
-
-.price-tag {
-    font-size: 0.80rem;
-    color: #0d6efd;
-    font-weight: 600;
-}

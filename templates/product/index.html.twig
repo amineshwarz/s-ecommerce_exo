@@ -3,11 +3,10 @@
 {% block title %}Product index{% endblock %}
 
 {% block body %}
-<div class="example-wrapper">
     <h1 class="text-center " style="margin-top:3em;">Tout les produits</h1>
-    <div class="productCard">
+    <div class="product-card">
     {% include 'layouts/_flash_message.html.twig' %} 
-        <table class="table table-striped-columns">
+        <table class="table table-striped">
             <thead>
                 <tr>
                     <th scope="col">Nom</th>
@@ -15,10 +14,11 @@
                     <th scope="col" class="text-center" >Stock</th>
                     <th scope="col" class="text-center">Prix</th>
                     <th scope="col" class="text-center">image</th>
-                    <th scope="col" class="col-2 text-center">Actions</th>
+                    {# <th scope="col" class="col-2 text-center">Actions</th> #}
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="align-middle">
+
             {% for product in products %}
                 <tr>
                     <td scope="row" class="fw-lighter">                      
@@ -36,14 +36,14 @@
                         
                         </td>
                     <td scope="row" class="fw-lighter text-center">{{ product.prix }} €</td>
-                    <td scope="row" class="fw-lighter">
+                    <td scope="row" class="fw-lighter text-center">
                         <img src="{{ asset('uploads/images/' ~ product.image) }}" alt="image" width="50" height="50">
                     </td>
-                    <td>
+                    {# <td>
                         <a href="{{ path('app_product_edit', {'id': product.id}) }}" class= 'btn btn-sm '>✏️</a>
                         <a href="{{ path('app_product_delete', {'id': product.id}) }}" class= 'btn btn-sm ' onclick="return confirm('Es-tu sûr de vouloir supprimer cet élément ?');">❌</a>
                         <a href="{{ path('app_product_stock_add', {'id': product.id}) }}"class= 'btn btn-sm '>+</a> 
-                    </td>
+                    </td> #}
                 </tr>
             {% else %}
                 <tr>
@@ -57,5 +57,4 @@
             <a href="{{ path('app_home_page') }}" class="btn btn-sm btn-outline-primary">Retour</a>
         </div>
     </div>
-</div>
 {% endblock %}

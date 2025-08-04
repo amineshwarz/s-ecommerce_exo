@@ -152,7 +152,7 @@ final class ProductController extends AbstractController
                 $em-> flush();
 
 
-                return $this->redirectToRoute('app_product_index');
+                return $this->redirectToRoute('app_product_show', ['id' => $product->getId()]);
             }else {
                 $this->addFlash('danger', 'La quantité doit être supérieure à 0.');
                 return $this->redirectToRoute('app_product_stock_add', ['id' => $product->getId()]);
@@ -169,7 +169,7 @@ final class ProductController extends AbstractController
     {
         $product = $productRepository->find($id);
 
-        $productaddHistory = $addProductHistoryRepository->findBy(['product' => $product], ['createdAt' => 'DESC']);
+        $productaddHistory = $addProductHistoryRepository->findBy(['product' => $product], ['id' => 'DESC']);
 
         // dd($productaddHistory);
         return $this->render('product/addedStockHistory.html.twig', [

@@ -3,34 +3,36 @@
 {% block title %}Product{% endblock %}
 
 {% block body %}
-<div class="login-card">
-    <h2 class="mb-4 text-center">l'affichage de produit</h2>
-        <img src="{{ asset('uploads/images/' ~ product.image) }}" alt="Photo de profil" style="max-width:180px; border-radius:50%;">
+<h1 class="text-center " style="margin-top:3em;">Tout les produits</h1>
+{% include 'layouts/_flash_message.html.twig' %}  <!-- Affichage des messages flash -->
 
+<div class="container-fluid px-5 py-5"> <!-- marge très petite sur les bords -->
+    <div class="card shadow-sm position-relative" >
+        <!-- Boutons en haut à droite -->
+        <div class="position-absolute top-0 end-0 m-2">
+            <div class="btn-group btn-group-sm" role="group" aria-label="Actions produit">
+                <a href ="{{ path('app_product_add_history', {'id': product.id}) }}" class="btn btn-outline-primary">affiche l'hostorique</a>
+                <a href="{{ path('app_product_stock_add', {'id': product.id}) }}" class="btn btn-outline-primary">+</a>
+                <a href="{{ path('app_product_edit', {'id': product.id}) }}" class= 'btn btn-sm btn-outline-primary'>✏️</a>
+                <a href="{{ path('app_product_delete', {'id': product.id}) }}" class= 'btn btn-sm btn-outline-primary' onclick="return confirm('Es-tu sûr de vouloir supprimer cet élément ?');">❌</a>
+            </div>
+        </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ product.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ product.name }}</td>
-            </tr>
-            <tr>
-
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <a href="{{ path('app_product_index') }}" class="btn btn-sm btn-primary">retour</a>
-
-        <a href="{{ path('app_product_edit', {'id': product.id}) }}" class="btn btn-sm btn-primary">edit</a><br>
-
-        <a href ="{{ path('app_product_add_history', {'id': product.id}) }}">affiche l'hostorique</a>
+        <div class="row g-0 align-items-center">
+            <div class="col-auto p-3">
+                <img src="{{ asset('uploads/images/' ~ product.image) }}" alt="Image produit" class="img-fluid rounded" style="max-width: 150px; max-height: 150px; object-fit: cover;">
+            </div>
+            <div class="col p-3">
+                <h3 class="mb-2">{{ product.name }}</h3>
+                <h5 class="text-primary mb-3">{{ product.prix }} €</h5>
+                <p class="text-muted">{{ product.description }}</p>
+                <p class="text-muted">Stock : {{ product.stock }}</p>
+            </div>
+            
+        </div>
+        
     </div>
+    <a href="{{ path('app_product_index') }}" class="btn btn-sm btn-outline-primary">retour</a>
 </div>
 
 {% endblock %}

@@ -9,7 +9,7 @@
     {{ form_start(form) }}
         {{ form_row(form.quantity,{'attr':{'class':'form form-control'}}) }}
         <button type="submit" class="btn btn-sm btn-primary">{{ button_label|default('Sauvegarder') }}</button>
-        <a href="{{ path('app_product_index') }}" class="btn btn-sm btn-outline-primary">retour</a>
+        <a href="{{ path('app_product_show',{'id':product.id}) }}" class="btn btn-sm btn-outline-primary">retour</a>
 {{ form_end(form) }}
     
 </div>
