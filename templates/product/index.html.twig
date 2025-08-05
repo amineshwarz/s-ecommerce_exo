@@ -3,17 +3,18 @@
 {% block title %}Product index{% endblock %}
 
 {% block body %}
-    <h1 class="text-center " style="margin-top:3em;">Tout les produits</h1>
+    <h1 class="text-center mb-5" style="margin-top:3em;">Tout les produits</h1>
     <div class="product-card">
     {% include 'layouts/_flash_message.html.twig' %} 
-        <table class="table table-striped">
+        <table class="table table-light table-striped">
             <thead>
                 <tr>
+                    <th scope="col" class="text-center">image</th>
                     <th scope="col">Nom</th>
                     <th scope="col">Description</th>
                     <th scope="col" class="text-center" >Stock</th>
                     <th scope="col" class="text-center">Prix</th>
-                    <th scope="col" class="text-center">image</th>
+                    
                     {# <th scope="col" class="col-2 text-center">Actions</th> #}
                 </tr>
             </thead>
@@ -21,11 +22,17 @@
 
             {% for product in products %}
                 <tr>
-                    <td scope="row" class="fw-lighter">                      
-                        <a href="{{ path('app_product_show', {'id': product.id}) }}" class= 'btn btn-sm '>
+                    <td scope="row" class="text-center">
+                        <a href="{{ path('app_product_show', {'id': product.id}) }}" class= 'btn btn-sm'>
+                            <img src="{{ asset('uploads/images/' ~ product.image) }}" alt="image" width="50" height="50">
+                        </a>
+                    </td>
+                    <td scope="row" class="">                      
+                        <a href="{{ path('app_product_show', {'id': product.id}) }}" class= 'btn btn-sm fw-bold'>
                             {{ product.name }}
                         </a>
                     </td>
+
                     <td scope="row" class="fw-lighter">{{ product.description|slice(0,100) }} ...</td> {#pour reduit la taille si ya une grand descri #}
                     <td scope="row" class="fw-lighter text-center">
                         {% if product.stock > 0 %}
@@ -36,9 +43,7 @@
                         
                         </td>
                     <td scope="row" class="fw-lighter text-center">{{ product.prix }} €</td>
-                    <td scope="row" class="fw-lighter text-center">
-                        <img src="{{ asset('uploads/images/' ~ product.image) }}" alt="image" width="50" height="50">
-                    </td>
+
                     {# <td>
                         <a href="{{ path('app_product_edit', {'id': product.id}) }}" class= 'btn btn-sm '>✏️</a>
                         <a href="{{ path('app_product_delete', {'id': product.id}) }}" class= 'btn btn-sm ' onclick="return confirm('Es-tu sûr de vouloir supprimer cet élément ?');">❌</a>
@@ -52,9 +57,9 @@
             {% endfor %}
             </tbody>
         </table>
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <a href="{{ path('app_product_new') }}" class="btn btn-sm btn-primary">Ajouter un Produit</a>
-            <a href="{{ path('app_home_page') }}" class="btn btn-sm btn-outline-primary">Retour</a>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end mx-2">
+            <a href="{{ path('app_product_new') }}" class="btn btn-sm btn-secondary">Ajouter un Produit</a>
+            <a href="{{ path('app_home_page') }}" class="btn btn-sm btn-outline-secondary">Retour</a>
         </div>
     </div>
 {% endblock %}

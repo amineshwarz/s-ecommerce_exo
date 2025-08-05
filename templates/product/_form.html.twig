@@ -17,5 +17,5 @@
     {{ form_row(form.subcategory,{'attr':{'class':'form form-control'}}) }}
     {{ form_row(form.image,{'attr':{'class':'form'}}) }}
     <button class="btn btn-sm btn-primary">{{ button_label|default('Sauvegarder') }}</button>
-    <a href="{{ path('app_product_show',{'id': product.id}) }}" class="btn btn-sm btn-outline-primary">retour</a>
+    {# <a href="{{ path('app_product_index') }}" class="btn btn-sm btn-outline-primary">retour</a> #}
 {{ form_end(form) }}

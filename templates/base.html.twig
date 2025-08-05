@@ -11,17 +11,20 @@
             {% block importmap %}{{ importmap('app') }}{% endblock %}
         {% endblock %}
     </head>
+
     <body class="parallax d-flex flex-column min-vh-100">
         {% block nav %}
             {% include 'layouts/navbar.html.twig' %}
         {% endblock %}
+        
         {% block body %}{% endblock %}
     </body>
+
     <footer>
     {% block footer %}
         <div class="footer mt-auto py-3 bg-info">
             <div class="container text-center">
-                <p class="text-center mb-0">© {{ "now"|date("Y") }} - Amine EL KHAL</p>
+                <p class="text-center text-light mb-0">© {{ "now"|date("Y") }} - Amine EL KHAL</p>
             </div>
         </div>
     {% endblock %}

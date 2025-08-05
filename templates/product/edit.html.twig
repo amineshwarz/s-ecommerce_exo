@@ -8,6 +8,6 @@
 
     {{ include('product/_form.html.twig', {'button_label': 'Modifier'}) }}
 
-
+<a href="{{ path('app_product_show',{'id':product.id}) }}" class="btn btn-sm btn-outline-primary">retour</a>
 </div>
 {% endblock %}

@@ -3,27 +3,25 @@
 {% block title %}History stock{% endblock %}
 
 {% block body %}
-<div class="login-card">
-    <h2 class="mb-4 text-center">PHistory stock</h2>
+<div class="historique-card">
+    <h2 class="mb-4 text-center my-3">Historique du Stock</h2>
     
-        <table class="table">
+        <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Date d'ajout</th>
-                    <th>Quantité</th>
-                    <th>Produit</th>
-
+                    <th class="text-center" >ID</th>
+                    <th class="text-center" >Produit</th>
+                    <th class="text-center" >Date d'ajout</th>
+                    <th class="text-center" >Quantité</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="align-middle text-center fw-lighter">
                 {% for addProductHistory in addProductHistories %}
                     <tr>
                         <td>{{ addProductHistory.id }}</td>
+                        <td>{{ addProductHistory.product.name }}</td>
                         <td>{{ addProductHistory.createdAT | date('Y-m-d H:i:s', 'Europe/Paris') }}</td>
                         <td>{{ addProductHistory.quantity }}</td>
-                        <td>{{ addProductHistory.product.name }}</td>
-
                     </tr>
                 {% else %}
                     <tr>
@@ -32,10 +30,13 @@
                 {% endfor %}
             </tbody>
         </table>
-               
+
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end mx-2">
+            <a href="{{ path('app_product_show',{'id':product.id}) }}" class="btn btn-sm btn-outline-secondary">Retour</a>
+        </div>       
 
 
-    <a href="{{ path('app_product_show',{'id':product.id}) }}">back to list</a>
+
 
 </div>
 
