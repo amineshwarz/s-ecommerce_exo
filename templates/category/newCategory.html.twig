@@ -10,9 +10,9 @@
         {{ form_row(form.name, {'attr': {'class': 'form form-control'}}) }} 
 
 
-        <div class="d-flex justify-content-between mt-4">
-            <button type="submit" class="btn btn-primary">Ajouter</button>
-            <a href="{{ path('app_category') }}" class="btn btn-outline-primary">Retour</a>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end mx-2">
+            <button type="submit" class="btn btn-sm btn-green">Ajouter</button>
+            <a href="{{ path('app_category') }}" class="btn btn-sm btn-outline-green">Retour</a>
         </div>
 
     {{ form_end(form) }} 

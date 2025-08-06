@@ -9,8 +9,8 @@
     {{ form_start(form) }}
         {{ form_row(form.quantity,{'attr':{'class':'form form-control'}}) }}
         <div class="d-grid gap-2 d-md-flex justify-content-md-end mx-2">
-            <button type="submit" class="btn btn-sm btn-secondary">{{ button_label|default('Sauvegarder') }}</button>
-            <a href="{{ path('app_product_show',{'id':product.id}) }}" class="btn btn-sm btn-outline-secondary">retour</a>
+            <button type="submit" class="btn btn-sm btn-green">{{ button_label|default('Sauvegarder') }}</button>
+            <a href="{{ path('app_product_show',{'id':product.id}) }}" class="btn btn-sm btn-outline-green">retour</a>
         </div>
     {{ form_end(form) }}   
 </div>

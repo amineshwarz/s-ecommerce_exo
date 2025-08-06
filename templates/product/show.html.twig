@@ -11,10 +11,10 @@
         <!-- Boutons en haut à droite -->
         <div class="position-absolute top-0 end-0 m-2">
             <div class="btn-group btn-group-sm" role="group" aria-label="Actions produit">
-                <a href ="{{ path('app_product_add_history', {'id': product.id}) }}" class="btn btn-outline-secondary">Historique</a>
-                <a href="{{ path('app_product_stock_add', {'id': product.id}) }}" class="btn btn-outline-secondary">+</a>
-                <a href="{{ path('app_product_edit', {'id': product.id}) }}" class= 'btn btn-sm btn-outline-secondary'>✏️</a>
-                <a href="{{ path('app_product_delete', {'id': product.id}) }}" class= 'btn btn-sm btn-outline-secondary' onclick="return confirm('Es-tu sûr de vouloir supprimer cet élément ?');">❌</a>
+                <a href ="{{ path('app_product_add_history', {'id': product.id}) }}" class="btn btn-outline-green">Historique</a>
+                <a href="{{ path('app_product_stock_add', {'id': product.id}) }}" class="btn btn-outline-green">+</a>
+                <a href="{{ path('app_product_edit', {'id': product.id}) }}" class= 'btn btn-sm btn-outline-green'>✏️</a>
+                <a href="{{ path('app_product_delete', {'id': product.id}) }}" class= 'btn btn-sm btn-outline-green' onclick="return confirm('Es-tu sûr de vouloir supprimer cet élément ?');">❌</a>
             </div>
         </div>
 
@@ -31,7 +31,7 @@
             
         </div>
         <div class="d-grid gap-2 d-md-flex justify-content-md-end my-3 mx-3">
-            <a href="{{ path('app_product_index') }}" class="btn btn-sm btn-secondary">Retour</a>
+            <a href="{{ path('app_product_index') }}" class="btn btn-sm btn-outline-green">Retour</a>
         </div>
     </div>
 </div>

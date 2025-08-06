@@ -3,14 +3,9 @@
 {% block title %}Hello CategoryController!{% endblock %}
 
 {% block body %}
-{# ---------------------------------le tableau d'affichage--------------------------- #}
-
-<div class="example-wrapper">
-    <h1 class="text-center " style="margin-top:3em;">Tout les categories</h1>
-    <div class="categoryCard">
+    <h1 class="text-center mb-5" style="margin-top:3em;">Gestion des Catégories</h1>
+    <div class="category-card">
     {% include 'layouts/_flash_message.html.twig' %} 
-
-
 
         <table class="table table-striped-columns">
             <thead>
@@ -35,10 +30,9 @@
 
 
 
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <a class="btn btn-primary" href="{{ path('app_category_new') }}">Ajouter une categorie</a>
-            <a href="{{ path('app_home_page') }}" class="btn btn-outline-primary">Retour</a>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end mx-2">
+            <a class="btn btn-green btn-sm" href="{{ path('app_category_new') }}">Ajouter une categorie</a>
+            <a href="{{ path('app_home_page') }}" class="btn btn-sm btn-outline-green">Retour</a>
         </div>
     </div> 
-</div>
 {% endblock %}

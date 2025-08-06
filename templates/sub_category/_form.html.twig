@@ -1,7 +1,7 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
-    <div class="d-flex justify-content-between mt-4">
-        <button class="btn btn-sm btn-primary">{{ button_label|default('Ajouter') }}</button>
-        <a href="{{ path('app_sub_category_index') }}" class="btn btn-sm btn-outline-primary">retour</a>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end mx-2">
+        <button class="btn btn-sm btn-green">{{ button_label|default('Ajouter') }}</button>
+        <a href="{{ path('app_sub_category_index') }}" class="btn btn-sm btn-outline-green">retour</a>
     </div> 
 {{ form_end(form) }}

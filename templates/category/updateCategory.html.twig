@@ -3,16 +3,16 @@
 {% block title %}Modification{% endblock %}
 
 {% block body %}
-<div class="register-card">
-    <h1 class="mb-4 text-center">Modifier une categorie</h1>
+<div class="login-card">
+    <h2 class="mb-4 text-center">Modifier une categorie</h2>
 
     {{ form_start(form) }} 
         {{ form_row(form.name, {'attr': {'class': 'form form-control'}}) }} 
 
 
-        <div class="d-flex justify-content-between mt-4">
-            <button type="submit" class="btn btn-primary">Modifier</button>
-            <a href="{{ path('app_category') }}" class="btn btn-outline-primary">Retour</a>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end mx-2">
+            <button type="submit" class="btn btn-sm btn-green">Modifier</button>
+            <a href="{{ path('app_category') }}" class="btn btn-sm btn-outline-green">Retour</a>
         </div>
 
     {{ form_end(form) }} 

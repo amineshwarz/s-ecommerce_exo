@@ -3,7 +3,7 @@
 {% block title %}Modification{% endblock %}
 
 {% block body %}
-<div class="register-card">
+<div class="login-card">
     <h2 class="mb-4 text-center">Modifier l'utilisateur</h2>
 
     {{ form_errors(form) }}
@@ -27,9 +27,9 @@
     </div>
     
 
-    <div class="d-flex justify-content-between mt-4">
-        <button type="submit" class="btn btn-primary">Modifier</button>
-        <a href="{{ path('app_user') }}" class="btn btn-outline-primary">Retour</a>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end mx-2">
+        <button type="submit" class="btn btn-sm btn-green">Modifier</button>
+        <a href="{{ path('app_user') }}" class="btn btn-sm btn-outline-green">Retour</a>
     </div>
     {{ form_end(form) }}
 </div>

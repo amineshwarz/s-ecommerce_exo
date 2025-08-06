@@ -3,7 +3,6 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-<div class="container container-form">
     <div class="login-card">
         <form method="post">
             {% if error %}
@@ -28,11 +27,10 @@
             </div>
             <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
 
-            <div class="d-flex justify-content-between mt-4">
-                <button class="btn btn-primary" type="submit">Se connecter</button>
-                <a href="{{ path('app_home_page')}}" class="btn btn-outline-primary">Retour</a>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end mx-2">
+                <button class="btn btn-sm btn-green" type="submit">Se connecter</button>
+                <a href="{{ path('app_home_page')}}" class="btn btn-sm btn-outline-green">Retour</a>
             </div>
         </form>
     </div>
-</div>
 {% endblock %}

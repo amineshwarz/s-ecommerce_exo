@@ -13,7 +13,7 @@
     backdrop-filter: opacity(50%);
 }
   /*----------------Style pour page d'acceuil-----------------*/
-  /*-----carte produit-----*/
+  /*-----carte produit acceuil-----*/
 
 .card {
     border-radius: 0 !important;
@@ -40,7 +40,7 @@
     color: #0d3c21;;
     font-weight: 600;
 }
-/*--------------------------------les Produit---------------------------------*/
+/*--------------------------------les Produit-Admin --------------------------------*/
 .product-card{
     width: 90%;
     margin: 0 auto;
@@ -51,16 +51,31 @@
 
 .historique-card {
     width: 600px;
-    margin: 20px auto;
+    margin: 0 auto;
     padding: 0 0 15px 0px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.255);
     background: #fff;
-    margin-top: 10em;
 }
 /* .card {
     box-shadow: 0 8px 32px rgba(0,0,0,0.255);
 } */
+/*-------------------------------page Utilisateurs -------------------------*/
+.user-Card{
+    width: 70%;
+    margin: 0 auto;
+    padding: 0 0 15px 0px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.255);
+    background: #fff;
+}
 
+.login-card {
+    width: 30%;
+    margin: 40px auto;
+    padding: 15px 20px 15px 30px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.255);
+    background: #fff;
+    margin-top: 10em;
+}
 /*----------------Style pour Inscription et Connexion-------------------------*/
 
 .form-control {
@@ -85,28 +100,16 @@
     max-width: 500px;
     margin: 30px auto;
     padding: 32px 24px;
-    border-radius: 16px;
     box-shadow: 0 8px 32px rgba(0,0,0,0.255);
-    background: #d4f9ff;
+    background: #ffffff;
     margin-top: 8em;
 }
-.login-card {
-    max-width: 430px;
-    margin: 40px auto;
-    padding: 36px 28px;
-    border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.255);
-    /* background: #d4f9ff; */
-    background: #fff;
-    margin-top: 10em;
-}
-.categoryCard{
-    max-width: 800px;
-    margin: 30px auto;
-    padding: 32px 24px;
-    border-radius: 16px;
+.category-card{
+    width: 50%;
+    margin: 0 auto;
+    padding: 0 0 15px 0px;
     box-shadow: 0 8px 32px rgba(0,0,0,0.255);
-    background: #d4f9ff;
+    background: #fff;
 }
 
 @media (min-width: 768px) {
@@ -130,9 +133,9 @@
     color: #fff !important;
 }
 .btn-green:hover {
-    background-color: #fff;
-    color:#0d3c21;
-    border: 1px solid #0d3c21;
+    background-color: #fff !important;
+    color:#0d3c21 !important;
+    border: 1px solid #0d3c21   !important;
 }
 
 .btn-outline-green {
@@ -148,7 +151,6 @@
     padding: 0.0rem 0.2rem !important;
     font-size: 0.70rem !important;
     border-radius: 0.2rem !important;
- 
-  }
+}
 
 

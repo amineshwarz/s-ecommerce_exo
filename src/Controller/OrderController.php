@@ -28,8 +28,9 @@ final class OrderController extends AbstractController
         }
 
         $total = array_sum(array_map(function($item) {
-            return $item['products']->getPrice() * $item['quantity'];
+            return $item['products']->getPrix() * $item['quantity'];
         }, $cardWithDatas));
+
         $order = new Order();
         $form = $this->createForm(OrderType::class, $order);
         $form->handleRequest($request);
@@ -37,6 +38,7 @@ final class OrderController extends AbstractController
 
         return $this->render('order/index.html.twig', [
             'form' => $form->createView(),
+            'total' => $total,
         ]);
     }
 }

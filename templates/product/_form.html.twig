@@ -17,7 +17,7 @@
     {{ form_row(form.subcategory,{'attr':{'class':'form form-control'}}) }}
     {{ form_row(form.image,{'attr':{'class':'form'}}) }}
     <div class="d-grid gap-2 d-md-flex justify-content-md-end mx-2">
-        <button class="btn btn-sm btn-secondary">{{ button_label|default('Sauvegarder') }}</button>
-        <button class="btn btn-sm btn-outline-secondary" onclick="window.history.back()">Retour</button>
+        <button class="btn btn-sm btn-green">{{ button_label|default('Sauvegarder') }}</button>
+        <button class="btn btn-sm btn-outline-green" onclick="window.history.back()">Retour</button>
     </div>
 {{ form_end(form) }}

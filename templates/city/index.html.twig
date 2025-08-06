@@ -20,10 +20,10 @@
         {% for city in cities %}
             <tr>
                 <td scope="col">{{ city.name }}</td>
-                <td>{{ city.shippingCost }}</td>
+                <td>{{ city.shippingCost }} €</td>
                 <td>
-                    <a href="{{ path('app_city_show', {'id': city.id}) }}">show</a>
-                    <a href="{{ path('app_city_edit', {'id': city.id}) }}">edit</a>
+                    <a href="{{ path('app_city_show', {'id': city.id}) }}" class= 'btn btn-sm '>👁</a>
+                    <a href="{{ path('app_city_edit', {'id': city.id}) }}" class= 'btn btn-sm ' onclick="return confirm('Es-tu sûr de vouloir supprimer cet élément ?');">❌</a>
                 </td>
             </tr>
         {% else %}

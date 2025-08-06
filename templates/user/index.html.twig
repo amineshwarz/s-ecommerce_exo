@@ -3,15 +3,12 @@
 {% block title %}Hello UserController!{% endblock %}
 
 {% block body %}
-
-
-<div class="example-wrapper">
-    <h1 class="text-center " style="margin-top:3em;">Dashbpard de tout les utilisateurs</h1>
-    <div class="categoryCard">
+    <h1 class="text-center mb-5" style="margin-top:3em;">Gestion des utilisateurs</h1>
+    <div class="user-Card">
     {% include 'layouts/_flash_message.html.twig' %} 
 
         <table class="table table-striped-columns">
-            <thead>
+            <thead class="text-center">
                 <tr>
                     <th scope="col">Nom</th>
                     <th scope="col">Prénom</th>
@@ -20,12 +17,12 @@
                     <th scope="col">Action</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody >
             {% for user in users %}
                 <tr>
-                    <th scope="row" class="fw-lighter"> {{user.firstName}}</th>
-                    <th scope="row" class="fw-lighter"> {{user.lastName}}</th>
-                    <th scope="row" class="fw-lighter"> {{user.email}}</th>
+                    <th scope="row" class="fw-lighter text-center"> {{user.firstName}}</th>
+                    <th scope="row" class="fw-lighter text-center"> {{user.lastName}}</th>
+                    <th scope="row" class="fw-lighter text-center"> {{user.email}}</th>
                     <th scope="row" class="fw-lighter"> 
                         {% for role in user.roles %}
                             {% if role == 'ROLE_ADMIN' %}
@@ -41,7 +38,7 @@
                     </th> 
                     <td class="text-center">
                       {% if ('ROLE_ADMIN' in app.user.roles)  %}
-                        <a href="{{ path('app_user_update', {'id': user.id}) }}" class= 'btn btn-sm '>✏️</a> 
+                        <a href="{{ path('app_user_update', {'id': user.id}) }}" class= 'btn btn-sm  '>✏️</a> 
                         <a href="" class= 'btn btn-sm ' onclick="return confirm('Es-tu sûr de vouloir supprimer cet élément ?');">❌</a>
                       {% endif %}                     
                     </td>
@@ -49,14 +46,8 @@
             {% endfor %}
             </tbody>
         </table>
-
-
-
-
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            {# <a class="btn btn-primary" href="{{ path('app_category_new') }}">Ajouter une categorie</a> #}
-            <a href="{{ path('app_home_page') }}" class="btn btn-outline-primary">Retour</a>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end mx-2">
+            <a href="{{ path('app_home_page') }}" class="btn btn-sm btn-outline-green">Retour</a>
         </div>
     </div> 
-</div>
 {% endblock %}
