@@ -41,14 +41,8 @@
                             <span>‼️</span>
                         {% endif %}
                         
-                        </td>
+                    </td>
                     <td scope="row" class="fw-lighter text-center">{{ product.prix }} €</td>
-
-                    {# <td>
-                        <a href="{{ path('app_product_edit', {'id': product.id}) }}" class= 'btn btn-sm '>✏️</a>
-                        <a href="{{ path('app_product_delete', {'id': product.id}) }}" class= 'btn btn-sm ' onclick="return confirm('Es-tu sûr de vouloir supprimer cet élément ?');">❌</a>
-                        <a href="{{ path('app_product_stock_add', {'id': product.id}) }}"class= 'btn btn-sm '>+</a> 
-                    </td> #}
                 </tr>
             {% else %}
                 <tr>
@@ -58,7 +52,7 @@
             </tbody>
         </table>
         <div class="d-grid gap-2 d-md-flex justify-content-md-end mx-2">
-            <a href="{{ path('app_product_new') }}" class="btn btn-sm btn-secondary">Ajouter un Produit</a>
+            <a href="{{ path('app_product_new') }}" class="btn btn-sm btn-secondary" >Ajouter un Produit</a>
             <a href="{{ path('app_home_page') }}" class="btn btn-sm btn-outline-secondary">Retour</a>
         </div>
     </div>

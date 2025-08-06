@@ -3,9 +3,8 @@
 {% block title %}History stock{% endblock %}
 
 {% block body %}
-<div class="historique-card">
-    <h2 class="mb-4 text-center my-3">Historique du Stock</h2>
-    
+    <div class="historique-card">
+        <h2 class="mb-4 text-center my-3">Historique du Stock</h2>
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -30,14 +29,8 @@
                 {% endfor %}
             </tbody>
         </table>
-
         <div class="d-grid gap-2 d-md-flex justify-content-md-end mx-2">
             <a href="{{ path('app_product_show',{'id':product.id}) }}" class="btn btn-sm btn-outline-secondary">Retour</a>
         </div>       
-
-
-
-
-</div>
-
+    </div>
 {% endblock %}

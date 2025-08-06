@@ -8,10 +8,11 @@
     <h2 class="mb-4 text-center">Ajouter un Stock pour <strong> {{ product.name }} </strong> </h2>
     {{ form_start(form) }}
         {{ form_row(form.quantity,{'attr':{'class':'form form-control'}}) }}
-        <button type="submit" class="btn btn-sm btn-primary">{{ button_label|default('Sauvegarder') }}</button>
-        <a href="{{ path('app_product_show',{'id':product.id}) }}" class="btn btn-sm btn-outline-primary">retour</a>
-    {{ form_end(form) }}
-    
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end mx-2">
+            <button type="submit" class="btn btn-sm btn-secondary">{{ button_label|default('Sauvegarder') }}</button>
+            <a href="{{ path('app_product_show',{'id':product.id}) }}" class="btn btn-sm btn-outline-secondary">retour</a>
+        </div>
+    {{ form_end(form) }}   
 </div>
 
 {% endblock %}

@@ -4,10 +4,8 @@
 
 {% block body %}
 <div class="login-card">
-    <h2 class="mb-4 text-center">Modifier votre Produits</h2>
-
+    <h2 class="mb-4 text-center">Modifier vote produit {{ product.name }}</h2>
     {{ include('product/_form.html.twig', {'button_label': 'Modifier'}) }}
-
-<a href="{{ path('app_product_show',{'id':product.id}) }}" class="btn btn-sm btn-outline-primary">retour</a>
 </div>
 {% endblock %}
+

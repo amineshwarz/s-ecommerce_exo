@@ -96,7 +96,8 @@
     padding: 36px 28px;
     border-radius: 16px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.255);
-    background: #d4f9ff;
+    /* background: #d4f9ff; */
+    background: #fff;
     margin-top: 10em;
 }
 .categoryCard{
@@ -132,8 +133,3 @@
   }
 
 
-  .dropdown-submenu > .dropdown-menu {
-    top: 0 !important;
-    left: 100% !important;
-    margin-top: -1px !important;
-}
