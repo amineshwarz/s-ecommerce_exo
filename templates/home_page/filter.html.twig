@@ -39,7 +39,7 @@
                             <div>
                                 <h4 class="price-tag">{{ product.prix }} €</h4>
                                 <p>{{ product.description }}</p>
-                                <button class="btn btn-xs btn-primary">Acheter</button>
+                                <a href="{{path('app_cart_add',{'id':product.id})}}" class="btn btn-sm btn-primary">ajouter au panier</a> 
                             </div>
                         </div>
                     </div>
