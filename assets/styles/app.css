@@ -2,7 +2,7 @@
      --green-700: #6c1469;  
   } */
 
-.parallax {
+  .parallax {
     /* background-image: url('/img/bg.jpg'); */
     background-attachment: fixed;
     background-position: center;
@@ -37,7 +37,7 @@
 
 .price-tag {
     font-size: 0.80rem;
-    color: #0d6efd;
+    color: #0d3c21;;
     font-weight: 600;
 }
 /*--------------------------------les Produit---------------------------------*/
@@ -123,6 +123,25 @@
     .name-row .form-group {
         margin-bottom: 1rem;
     }
+}
+/*----------------Les Boutton-------------------------*/
+.btn-green{
+    background-color: #0d3c21 !important;
+    color: #fff !important;
+}
+.btn-green:hover {
+    background-color: #fff;
+    color:#0d3c21;
+    border: 1px solid #0d3c21;
+}
+
+.btn-outline-green {
+    color: #0d3c21 !important;
+    border-color: #0d3c21 !important;
+}
+.btn-outline-green:hover {
+    background-color: #0d3c21 !important;
+    color: #fff !important;
 }
 
 .btn-xs {

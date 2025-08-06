@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}City{% endblock %}
+
+{% block body %}
+    <h1 class="text-center " style="margin-top:3em;">Cities</h1>
+    <div class="container-fluid px-5 py-5">
+        <div class="card shadow position-relative" >
+            <div class="position-absolute top-0 end-0 m-2">
+                <div class="btn-group btn-group-sm" role="group" aria-label="Actions produit">
+                    <a href="{{ path('app_city_edit', {'id': city.id}) }}" class= 'btn btn-sm btn-outline-secondary'>✏️</a>
+                    <a href="{{ path('app_city_delete', {'id': city.id}) }}" class= 'btn btn-sm btn-outline-secondary' onclick="return confirm('Es-tu sûr de vouloir supprimer cet élément ?');">❌</a>
+                </div>
+            </div>
+
+            <div class="row g-0 align-items-center">
+                <div class="col p-3">
+                    <h3 class="mb-2">{{ city.name }}</h3>
+                    <h5 class="text-primary mb-3">{{ city.shippingCost }} €</h5>
+                </div>
+            </div>
+        </div>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end my-3 mx-3">
+            <a href="{{ path('app_city_index') }}" class="btn btn-sm btn-secondary">retour</a>
+        </div>
+    </div>
+{% endblock %}

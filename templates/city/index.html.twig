@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}City index{% endblock %}
+
+{% block body %}
+<h1 class="text-center" style="margin-top:3em;letter-spacing:2px;margin-bottom:2em;">City Index</h1>
+<div class="historique-card">
+    {% include 'layouts/_flash_message.html.twig' %}
+    
+
+    <table class="table table-light table-striped">
+        <thead class="align-middle text-center">
+            <tr>
+                <th >Name</th>
+                <th>Prix de livraison</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody class="align-middle text-center fw-lighter">
+        {% for city in cities %}
+            <tr>
+                <td scope="col">{{ city.name }}</td>
+                <td>{{ city.shippingCost }}</td>
+                <td>
+                    <a href="{{ path('app_city_show', {'id': city.id}) }}">show</a>
+                    <a href="{{ path('app_city_edit', {'id': city.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end mx-2">
+        <a href="{{ path('app_city_new') }}" class=" btn btn-sm btn-outline-green">Ajouter</a>
+    </div>
+</div>
+{% endblock %}

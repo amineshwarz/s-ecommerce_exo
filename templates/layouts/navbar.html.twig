@@ -69,6 +69,11 @@
                 </ul>
             </li> 
             {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="{{ path('app_cart') }}"  role="button" aria-expanded="false">
+                    Panier
+                    </a>
+                </li>
             {% if app.user %}
                 <li class="nav-item">
                     <a href="{{ path('app_logout') }}" class="btn btn-sm btn-outline-light" onclick="return confirm('Es-tu sûr de vouloir te déconecter ?');">  Déconnexion</a>

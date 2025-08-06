@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit City{% endblock %}
+
+{% block body %}
+<div class="login-card">
+    <h2 class="mb-4 text-center">Modifier  <strong>{{ city.name }} </strong></h2>
+
+    {{ include('city/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_city_index') }}">Retour</a>
+
+</div>
+{% endblock %}
