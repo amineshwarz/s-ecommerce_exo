@@ -79,17 +79,5 @@ final class CityController extends AbstractController
 
         return $this->redirectToRoute('app_city_index', [], Response::HTTP_SEE_OTHER);
     }
-    // #[Route('/delete/{id}', name: 'app_product_delete')]
-    // public function delete(Product $product, EntityManagerInterface $entityManager): Response
-    // {
-    //     if ($product) {
-    //         $entityManager->remove($product);
-    //         $entityManager->flush();
-
-    //         $this->addFlash('success', 'Suppression réussi !!');
-    //     }
-
-    //     return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
-    // }
 
 }

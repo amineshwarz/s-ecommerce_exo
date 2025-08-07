@@ -2,10 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\City;
 use App\Entity\Order;
 use App\Form\OrderType;
 use App\Repository\ProductRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -40,6 +40,14 @@ final class OrderController extends AbstractController
             'form' => $form->createView(),
             'total' => $total,
         ]);
+    }
+
+    #[Route('/city/{id}/shipping/cost', name: 'app_city_shipping_cost')]
+    public function cityShippingCost(City $city): Response
+    {
+        $cityShippingPrix = $city->getShippingCost();
+
+        return new Response(json_encode(['status' =>200, "message"=>'on', 'content' => $cityShippingPrix]));
     }
 }
 
