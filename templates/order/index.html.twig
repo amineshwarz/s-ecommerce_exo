@@ -9,14 +9,16 @@
         <div class='col-5  mx-5 my-5'>
             {{ form_start(form)}}
             {{ form_widget(form) }}
-             <input type="submit" value="continuer" class="btn btn-sm btn-primary"/>
+        {# <input type="submit" value="continuer" class="btn btn-sm btn-green"/> #}
+        <a href="" class="btn btn-sm btn-green">Continuer vers le payment</a>
+        <a href="{{ path('app_cart') }}" class="btn btn-sm btn-outline-green">Retour</a>
             {{ form_end(form) }}
         </div>
 
         <div class=' col-3 align-self-center '>
             <span class="mb-2">Montant a payer :</span>
             <h5>
-                <span id="card-price">Total: {{ total }} </span>€
+                <span id="card-price">{{ total }}</span>€
             </h5>
             <span class="mb-2">Frais de livraison :</span>
             <h5>
@@ -24,7 +26,7 @@
             </h5>
             <span class="mb-2">Montant Total a payer :</span>
             <h5>
-                <span class="total_price"></span>€
+                <span class="total-price" id="total-price"></span>€
             </h5>
         </div>
     </div>
@@ -41,15 +43,20 @@
     // recupérè la valeur acctuelle de l'éléments citySelector (liste déroulant des villes) et le stock dans la variable cityValue
     const url = `city/${cityValue}/shipping/cost`; // construit l'url pour la requete ajax en utilisant la valeur de la ville
         
-        function ajaxRequest(url){
-            $.ajax({
+        function ajaxRequest(url){ //définition d'une fonction nommée ajaxRequest 
+            $.ajax({ // envoie une requette type ajax au lien constuit 
                 url: url, // l'url de la requete
                 type: 'GET', // la méthode de la requete
-                success: function(response) { 
-                   const newResponse = JSON.parse(response); // parse la réponse json
+                success: function(response) { // fonction ou cas reponse de la requette
+                   const newResponse = JSON.parse(response); // parse la réponse json pour la rendre utilisable
                    if (parseInt(newResponse.status) === 200) { // si le status de la réponse est 200
-                      console.log(newResponse.status)
-                      $("#shippingCost").text(newResponse.content); 
+                        console.log(newResponse.status) //on affiche le statue de la réponse dans le consol
+                        $('#shippingCost').text(newResponse.content);
+                      
+                        const cardPrice = parseInt($('#card-price').text()); // récupérer le prix de la carte
+                        const shippingCost = parseInt($('#shippingCost').text());
+
+                         $('.total-price').text(cardPrice + shippingCost); // affiche le prix total dans l'élément avec la classe total-price
                     }
                 },
                 error:function(xhr,status,error) {
@@ -58,11 +65,11 @@
                 }
             });
         }
-        ajaxRequest(url); 
-            citySelector.on('change', function() {
-                const urlUpdate = `city/${$(this).val()}/shipping/cost`;
-                ajaxRequest(urlUpdate);
-            });       
+        ajaxRequest(url); //appel de la fonction ajaxRequest avec l url construit
+        citySelector.on('change', function() {
+            const urlUpdate = `city/${$(this).val()}/shipping/cost`;
+            ajaxRequest(urlUpdate);
+        });       
     }) 
 </script>
 {% endblock %}
