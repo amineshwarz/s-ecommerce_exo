@@ -154,3 +154,11 @@
 }
 
 
+.order-card{
+    width: 50%;
+    margin: 0 auto;
+    padding: 0 0 15px 0px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.255);
+    background: #fff;
+}
+

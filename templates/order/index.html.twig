@@ -3,101 +3,67 @@
 {% block title %}Hello OrderController!{% endblock %}
 
 {% block body %}
-<div class='container'>
-    <div class='row'>
-        <div class='col-8'>
-            <h1 class='mt-4 mb-4'> commande </h1>
+ <h1 class="text-center mb-5" style="margin-top:3em;">Votre Commande</h1>
+<div class='order-card'>
+    <div class='row align-self-center'>
+        <div class='col-5  mx-5 my-5'>
             {{ form_start(form)}}
+            {{ form_widget(form) }}
              <input type="submit" value="continuer" class="btn btn-sm btn-primary"/>
             {{ form_end(form) }}
         </div>
-        <div class='col-4'>
 
+        <div class=' col-3 align-self-center '>
+            <span class="mb-2">Montant a payer :</span>
+            <h5>
+                <span id="card-price">Total: {{ total }} </span>€
+            </h5>
+            <span class="mb-2">Frais de livraison :</span>
+            <h5>
+                <span id="shippingCost"></span>€
+            </h5>
+            <span class="mb-2">Montant Total a payer :</span>
+            <h5>
+                <span class="total_price"></span>€
+            </h5>
         </div>
     </div>
 </div>
-<div class="col-4 mt-5">
-    <span class="mb-2">Montant a payer :</span>
-    <h3>
-        <span id="card-price">Total: {{ total }} </span>€
-    </h3>
-    <span class="mb-2">Frais de livraison :</span>
-    <h3>
-        <span id="shippingCost"></span>€
-    </h3>
-</div>
-
  
 
-{# @reboot sleep 60 && "/Users/user/backup/backup.sh" > "/Users/user/backup/backup.log" 2>&1 #}
 
 
- <script   src="https://code.jquery.com/jquery-3.7.1.min.js"   integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="   crossorigin="anonymous"></script> 
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"   integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="   crossorigin="anonymous"></script> 
 <script>
     $(document).ready(function(){
         const citySelector = $('#order_city'); // select l'element html qui a l'id order_city et le stocké dans la variable citySelector
         const cityValue = citySelector.val();
     // recupérè la valeur acctuelle de l'éléments citySelector (liste déroulant des villes) et le stock dans la variable cityValue
-
-        const url = `http://127.0.0.1:8000/city/${cityValue}/shipping/cost`; // construit l'url pour la requete ajax en utilisant la valeur de la ville
-        $.ajax({
-            url: url, // l'url de la requete
-            type: 'GET', // la méthode de la requete
-            success: function(response) { 
-               const newResponse = JSON.parse(response); // parse la réponse json
-               if (parseInt(newResponse.status) === 200) { // si le status de la réponse est 200
-                   console.log(newResponse.status)
-                   $("#shippingCost").text(newResponse.content); 
-                }
-            },
-             error:function(xhr,status,error) {
+    const url = `city/${cityValue}/shipping/cost`; // construit l'url pour la requete ajax en utilisant la valeur de la ville
+        
+        function ajaxRequest(url){
+            $.ajax({
+                url: url, // l'url de la requete
+                type: 'GET', // la méthode de la requete
+                success: function(response) { 
+                   const newResponse = JSON.parse(response); // parse la réponse json
+                   if (parseInt(newResponse.status) === 200) { // si le status de la réponse est 200
+                      console.log(newResponse.status)
+                      $("#shippingCost").text(newResponse.content); 
+                    }
+                },
+                error:function(xhr,status,error) {
                 // console.error('AJAX Error:', status, error);
                 // alert('Failed to load shipping cost. Please try again later.');
-            }
-            });
-            citySelector.on('change', function() {
-                alert($(this).val());
-            })
-
-            
-            fetch('https://exemple.com/data.json')
-
-            .then(response => {
-                if (!response.ok) {
-                throw new Error('Erreur réseau : ' + response.status);
                 }
-                return response.json();
-            })
-            .then(data => console.log(data))
-            .catch(error => console.error('Erreur lors du chargement:', error));
+            });
+        }
+        ajaxRequest(url); 
+            citySelector.on('change', function() {
+                const urlUpdate = `city/${$(this).val()}/shipping/cost`;
+                ajaxRequest(urlUpdate);
+            });       
     }) 
-
-
-
-
-
-
-
-
-        // function ajaxRequest(url){ // Envoie une rquête Ajax de type GET à l'URL
-        //     $.ajax({
-        //         url: url, // l'url de la requete
-        //         type: 'GET', // la méthode de la requete
-        //         success: function(response) { 
-        //             const newResponse = JSON.parse(response); // parse la réponse json
-        //             if (parseInt(newResponse.status) === 200) { // si le status de la réponse est 200
-        //                 console.log(newResponse.status)
-        //                 $("#shippingCost").text(newResponse.content); 
-        //             }
-        //         },
-        //         error:function(xhr,status,error) {
-        //             console.error("Erreur lors de la requête AJAX:", error);
-        //         }
-        //     });
-
-
-        // }
-    
 </script>
 {% endblock %}
 
