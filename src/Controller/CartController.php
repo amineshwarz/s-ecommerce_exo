@@ -2,11 +2,12 @@
 
 namespace App\Controller;
 
+use App\service\Cart;
 use App\Repository\ProductRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class CartController extends AbstractController
 {
@@ -19,25 +20,15 @@ final class CartController extends AbstractController
     }
 
     #[Route('/cart', name: 'app_cart', methods:['GET'])]
-    public function index(SessionInterface $session): Response
+    public function index(SessionInterface $session, Cart $cart): Response
     {
-        $cart =$session->get('cart', []); // Récupère les données du panier en session, ou un empty table
-        $cartWithData=[]; //Initialisation table pour stocker les donné du panier 
-        foreach ($cart as $id =>$quantity){ // boucle sur les element du panier pour recuperer les info de produit
-            $cartWithData[] = [ // récupère le produit correspondant a l'id et la quantité
-                'product'=> $this->productRepository->find($id), // récuperer le produit par son id 
-                'quantity' => $quantity // quantité du produit dans le panier
-            ];
-        }
-
-        $total = array_sum(array_map(function($item){ // calcul du totlal de panier
-            return $item['product'] ->getprix() * $item['quantity']; // pour chque élément du panier, multiplie le prix de proquit par quantity
-        }, $cartWithData));
+        $data= $cart->getCart($session);
 
         return $this->render('cart/index.html.twig', [
-            'items' =>$cartWithData,
-            'total'=> $total,
+            'items' => $data ['cart'],
+            'total' =>$data ['total'],
         ]);
+
     }
 
     #[Route('/cart/add/{id}', name: 'app_cart_add', methods:['GET'])]
