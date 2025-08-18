@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello OrderController!{% endblock %}
+
+{% block body %}
+<h1 class="text-center mb-5" style="margin-top:3em;">Historique de vos commande</h1>
+<div class='order-card text-center'>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Prénom</th>
+                <th scope="col">Téléphone</th>
+                <th scope="col">Adresse</th>
+                <th scope="col">Ville</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.firstName }}</td>
+                <td>{{ order.lastName }}</td>
+                <td>{{ order.phone}} </td>
+                <td>{{ order.adresse }}</td>
+                <td>{{ order.city.name }}</td>
+                <td><a href="{{ path('app_orders_show', {'id': order.id}) }}" class="btn btn-sm btn-green">Voir Détails</a></td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5" class="text-center">Aucune commande trouvée.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class=" mx-5 justify-content-center">
+        {{ knp_pagination_render(orders, 'layouts/paginator.html.twig') }}
+    </div>
+</div>
+<h5 class='text-center mt-5'>Corps de la commande</h5>
+ <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Nom du produit</th>
+                <th scope="col">Quantité</th>
+                <th scope="col">Prix Unitaire</th>
+                <th scope="col">Total</th>
+            </tr>
+        </thead>
+        {# <tbody>
+            {% for product in orders.orderproducts %}
+            <tr>
+                <td>{{ product.product.name }}</td>
+                <td>{{ product.quantity }}</td>
+                <td>{{ product.product.price }} €</td>
+                <td>{{ product.product.price*product.quantity}} €</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="4" class="text-center">Aucun produit dans la commande.</td>
+            </tr>
+            {% endfor %}
+        </tbody> #}
+    </table>
+    {# <h5> Frais de livraison : {{ order.city.shippingCost }} €</h5>
+    <h5 class='mb-5'> Total de la commande : {{ order.totalPrice }} €</h5> #}
+ 
+{% endblock %}
