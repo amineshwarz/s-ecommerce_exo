@@ -30,7 +30,7 @@ final class BillController extends AbstractController
         $domPdf->loadHtml($html);
         $domPdf->render();
         $domPdf-> stream ('bill-' . $order->getId() . '.pdf', [
-            'Attachment' => true
+            'Attachment' => false
         ]);
 
         return new Response('', 200, [
