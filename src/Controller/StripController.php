@@ -72,19 +72,27 @@ final class StripController extends AbstractController
                 
                 // Enregistrer les détails du paiement dans un fichier
                 $fileName = 'stripe-detail-'.uniqid().'.txt';
+                file_put_contents($fileName, $paymentIntent);
+                // $orderId = $paymentIntent->metadata->orderId ?? null;
+                // if ($orderId === null) {
+                //     // Optional: Log ou gérer le cas où metadata orderId est manquant
+                //     return new Response('No orderId in metadata', 400);
+                // }
 
-                $orderId = $paymentIntent->metadata->orderId;
-                $order = $orderRepository->find($orderId);
+                // $order = $orderRepository->find($orderId);
 
-                $cartPrice = $order->getTotalPrice();
-                $stripeTotalAmount = $paymentIntent->amount/100;
-                if($cartPrice==$stripeTotalAmount){
-                    $order->setIsPaymentCompleted(1);
-                    $entityManager->flush();
-                }
+                // if ($order === null) {
+                //     // Optional: Log ou gérer le cas ordre non trouvé en base
+                //     return new Response('Order not found', 404);
+                // }
 
-                
-                file_put_contents($fileName, $orderId);
+                // $cartPrice = $order->getTotalPrice();
+                // $stripeTotalAmount = $paymentIntent->amount/100;
+                // if($cartPrice==$stripeTotalAmount){
+                //     $order->setIsPaymentCompleted(1);
+                //     $entityManager->flush();
+                // }
+
                 break;
             case 'payment_method.attached':   // Événement de méthode de paiement attachée
                 // Récupérer l'objet payment_method
