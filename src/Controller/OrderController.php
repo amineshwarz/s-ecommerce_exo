@@ -8,6 +8,7 @@ use App\service\Cart;
 use DateTimeImmutable;
 use App\Form\OrderType;
 use App\Entity\OrderProducts;
+use App\Service\StripePayment;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Mime\Email;
 use App\Repository\OrderRepository;
@@ -15,11 +16,11 @@ use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Mailer\MailerInterface;
 
 final class OrderController extends AbstractController
 {
@@ -37,44 +38,49 @@ final class OrderController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
-            if($order->isPayOnDelivery()){
-                if(!empty($data['total'])){
+            
+            if(!empty($data['total'])){
 
-                    $shippingCost = $order->getCity()->getShippingCost(); // pour ajouter les frais de livraison a vec le prix de la commande
-                    $totalWithShipping = $data['total'] + $shippingCost;
+                $shippingCost = $order->getCity()->getShippingCost(); // pour ajouter les frais de livraison a vec le prix de la commande
+                $totalWithShipping = $data['total'] + $shippingCost;
 
-                    $order->setTotalPrice($totalWithShipping);
-                    $order -> setCreatedAt(new DateTimeImmutable());
-                    // $order-> setCreatedAt( new \DataTimeImmutable());
-                    $em -> persist($order);
-                    $em -> flush();
+                $order->setTotalPrice($totalWithShipping);
+                $order -> setCreatedAt(new DateTimeImmutable());
+                // $order-> setCreatedAt( new \DataTimeImmutable());
+                $em -> persist($order);
+                $em -> flush();
 
-                    foreach($data['cart'] as $value) {
-                        $orderProduct = new OrderProducts();
-                        $orderProduct->setOrder($order);
-                        $orderProduct->setProduct($value['product']);
-                        $orderProduct->setQte($value['quantity']);
-                        $em->persist($orderProduct);
-                        $em->flush();
-                    }
+                foreach($data['cart'] as $value) {
+                    $orderProduct = new OrderProducts();
+                    $orderProduct->setOrder($order);
+                    $orderProduct->setProduct($value['product']);
+                    $orderProduct->setQte($value['quantity']);
+                    $em->persist($orderProduct);
+                    $em->flush();
                 }
+                if($order->isPayOnDelivery()){
+                    $session->set('cart', []); // Mise ajour du contenu du panier en session
+
+                    $html = $this->renderView('order/orderMessage.html.twig', [ // crée une vue mail
+                        'order' => $order, // on recupere le order apres flush donc on a toutes les info 
+                    ]);
+                    $email =(new Email()) // on importe la classe depuis Symfony\Component\Mime\Email;
+                    -> from ('shop@gmailcom') // l'adresse de l'expéditeur notre adresse email
+                    -> to($order->getEmail()) // l'adresse du destinataire
+                    -> subject('Confirmation de reception de commande') // Intitulé du mail
+                    -> html($html); // le contenu du mail
+                    $this->mailer->send($email); // envoi du mail
+                    $this->addFlash('success', 'Votre commande a été enregistrée avec succès. Un email de confirmation vous a été envoyé.');
+                    return $this->redirectToRoute('order_message'); // Redirection vers la page du panier
+                }
+
             }
-             $session->set('cart', []); // Mise ajour du contenu du panier en session
-
-            $html = $this->renderView('order/orderMessage.html.twig', [ // crée une vue mail
-                'order' => $order, // on recupere le order apres flush donc on a toutes les info 
-            ]);
-            $email =(new Email()) // on importe la classe depuis Symfony\Component\Mime\Email;
-            -> from ('shop@gmailcom') // l'adresse de l'expéditeur notre adresse email
-            -> to('elkhal.medamine@gmail.com') // l'adresse du destinataire
-            -> subject('Confirmation de reception de commande') // Intitulé du mail
-            -> html($html); // le contenu du mail
-            $this->mailer->send($email); // envoi du mail
-            $this->addFlash('success', 'Votre commande a été enregistrée avec succès. Un email de confirmation vous a été envoyé.');
-             return $this->redirectToRoute('order_message'); // Redirection vers la page du panier
-
+            $paymentStripe = new StripePayment();
+            $shippingCost = $order->getCity()->getShippingCost();
+            $paymentStripe->startPayment($data,$shippingCost);
+            $stripRedirectUrl = $paymentStripe->getStripeRedirectUrl();
+            return $this -> redirect($stripRedirectUrl);
         }
-
 
         return $this->render('order/index.html.twig', [
             'form' => $form->createView(),
