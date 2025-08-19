@@ -19,6 +19,12 @@
             <ul class="navbar-nav align-items-center">
             {% if is_granted("ROLE_ADMIN") %}
                 <li class="nav-item dropdown ">
+                    <a class="nav-link dropdown-toggle text-light" href="{{ path('app_orders_show')}}" role="button" data-bs-toggle="dropdown">Historique Commandes</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{ path('app_orders_show') }}">Voir l'historique</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown ">
                     <a class="nav-link dropdown-toggle text-light" href="{{ path('app_city_index')}}" role="button" data-bs-toggle="dropdown">Cities</a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{{ path('app_city_index') }}">Voir les villes</a></li>

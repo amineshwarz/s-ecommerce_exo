@@ -46,7 +46,7 @@ class Order
     #[ORM\Column]
     private ?float $totalPrice = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type:"boolean", nullable:true)]
     private ?bool $isCompleted = null;
 
     public function __construct()

@@ -8,9 +8,10 @@ use App\service\Cart;
 use DateTimeImmutable;
 use App\Form\OrderType;
 use App\Entity\OrderProducts;
+use Doctrine\ORM\EntityManager;
+use Symfony\Component\Mime\Email;
 use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,12 +19,16 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
+use Symfony\Component\Mailer\MailerInterface;
 
 final class OrderController extends AbstractController
 {
+    public function __construct(private MailerInterface $mailer)
+    {
+    }
+
     #[Route('/order', name: 'app_order')]
-    public function index(Request $request,ProductRepository $productRepository, SessionInterface $session, EntityManagerInterface $em, Cart $cart): Response
+    public function index(Request $request, SessionInterface $session, EntityManagerInterface $em, Cart $cart): Response
     {
         $data = $cart->getCart($session);
 
@@ -34,7 +39,11 @@ final class OrderController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()){
             if($order->isPayOnDelivery()){
                 if(!empty($data['total'])){
-                    $order -> setTotalPrice($data['total']);
+
+                    $shippingCost = $order->getCity()->getShippingCost(); // pour ajouter les frais de livraison a vec le prix de la commande
+                    $totalWithShipping = $data['total'] + $shippingCost;
+
+                    $order->setTotalPrice($totalWithShipping);
                     $order -> setCreatedAt(new DateTimeImmutable());
                     // $order-> setCreatedAt( new \DataTimeImmutable());
                     $em -> persist($order);
@@ -51,6 +60,17 @@ final class OrderController extends AbstractController
                 }
             }
              $session->set('cart', []); // Mise ajour du contenu du panier en session
+
+            $html = $this->renderView('order/orderMessage.html.twig', [ // crée une vue mail
+                'order' => $order, // on recupere le order apres flush donc on a toutes les info 
+            ]);
+            $email =(new Email()) // on importe la classe depuis Symfony\Component\Mime\Email;
+            -> from ('shop@gmailcom') // l'adresse de l'expéditeur notre adresse email
+            -> to('elkhal.medamine@gmail.com') // l'adresse du destinataire
+            -> subject('Confirmation de reception de commande') // Intitulé du mail
+            -> html($html); // le contenu du mail
+            $this->mailer->send($email); // envoi du mail
+            $this->addFlash('success', 'Votre commande a été enregistrée avec succès. Un email de confirmation vous a été envoyé.');
              return $this->redirectToRoute('order_message'); // Redirection vers la page du panier
 
         }
