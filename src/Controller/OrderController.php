@@ -8,8 +8,7 @@ use App\service\Cart;
 use DateTimeImmutable;
 use App\Form\OrderType;
 use App\Entity\OrderProducts;
-use App\Service\StripePayment;
-use Doctrine\ORM\EntityManager;
+use App\service\StripePayment;
 use Symfony\Component\Mime\Email;
 use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
@@ -31,31 +30,31 @@ final class OrderController extends AbstractController
     #[Route('/order', name: 'app_order')]
     public function index(Request $request, SessionInterface $session, EntityManagerInterface $em, Cart $cart): Response
     {
-        $data = $cart->getCart($session);
+        $data = $cart->getCart($session); //Récupére les données du panier a partir de la session 
 
-        $order = new Order();
-        $form = $this->createForm(OrderType::class, $order);
-        $form->handleRequest($request);
+        $order = new Order(); //cree un nouveau objet order
+        $form = $this->createForm(OrderType::class, $order); //Crée un formulaire pour gérer la creation de la commande using
+        $form->handleRequest($request); //gerer la soumission du formulaire 
 
-        if ($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()){ //quand c'est true
             
-            if(!empty($data['total'])){
+            if(!empty($data['total'])){ //Vérifie si le total du panier n'est pas vide
+                $totalPrice = $data['total'] + $order->getCity()->getShippingCost();
+                // $shippingCost = $order->getCity()->getShippingCost(); // pour ajouter les frais de livraison a vec le prix de la commande
+                // $totalWithShipping = $data['total'] + $shippingCost;
 
-                $shippingCost = $order->getCity()->getShippingCost(); // pour ajouter les frais de livraison a vec le prix de la commande
-                $totalWithShipping = $data['total'] + $shippingCost;
-
-                $order->setTotalPrice($totalWithShipping);
-                $order -> setCreatedAt(new DateTimeImmutable());
-                // $order-> setCreatedAt( new \DataTimeImmutable());
+                $order->setTotalPrice($totalPrice); //définit le prix total de la commande
+                $order->setCreatedAt(new DateTimeImmutable()); //définit la date de creation de la commande
+                $order->setIsPaymentCompleted(0); //on initialise a false
                 $em -> persist($order);
                 $em -> flush();
-
-                foreach($data['cart'] as $value) {
-                    $orderProduct = new OrderProducts();
-                    $orderProduct->setOrder($order);
-                    $orderProduct->setProduct($value['product']);
-                    $orderProduct->setQte($value['quantity']);
-                    $em->persist($orderProduct);
+                
+                foreach($data['cart'] as $value) { // boucle sur chaque element du panier 
+                    $orderProduct = new OrderProducts(); // créé un nouveau objet OrderProduct
+                    $orderProduct->setOrder($order); // Definit la commande pour le produit de la commande 
+                    $orderProduct->setProduct($value['product']);// Definit le produit pour le produit de la commande 
+                    $orderProduct->setQte($value['quantity']); // Definit la quantité pour le produit de la commande 
+                    $em->persist($orderProduct); // enregistrer le produit de la commande dans la bdd
                     $em->flush();
                 }
                 if($order->isPayOnDelivery()){
@@ -73,13 +72,12 @@ final class OrderController extends AbstractController
                     $this->addFlash('success', 'Votre commande a été enregistrée avec succès. Un email de confirmation vous a été envoyé.');
                     return $this->redirectToRoute('order_message'); // Redirection vers la page du panier
                 }
-
-            }
-            $paymentStripe = new StripePayment();
-            $shippingCost = $order->getCity()->getShippingCost();
-            $paymentStripe->startPayment($data,$shippingCost);
-            $stripRedirectUrl = $paymentStripe->getStripeRedirectUrl();
-            return $this -> redirect($stripRedirectUrl);
+                $paymentStripe = new StripePayment(); // on importe notre service avec sa 
+                $shippingCost = $order->getCity()->getShippingCost();
+                $paymentStripe->startPayment($data,$shippingCost, $order->getId());
+                $stripRedirectUrl = $paymentStripe->getStripeRedirectUrl();
+                return $this -> redirect($stripRedirectUrl);
+            }          
         }
 
         return $this->render('order/index.html.twig', [

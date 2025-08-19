@@ -16,7 +16,7 @@ final class StripController extends AbstractController
     #[Route('/pay/success', name: 'app_stripe_success')]
     public function success(SessionInterface $session): Response
     {
-        // $session->set('cart',[]);
+        $session->set('cart',[]);
         // Rendre la vue "index.html.twig" avec le nom du contrôleur
         return $this->render('strip/index.html.twig', [
             'controller_name' => 'StripeController',
@@ -72,27 +72,16 @@ final class StripController extends AbstractController
                 
                 // Enregistrer les détails du paiement dans un fichier
                 $fileName = 'stripe-detail-'.uniqid().'.txt';
-                file_put_contents($fileName, $paymentIntent);
-                // $orderId = $paymentIntent->metadata->orderId ?? null;
-                // if ($orderId === null) {
-                //     // Optional: Log ou gérer le cas où metadata orderId est manquant
-                //     return new Response('No orderId in metadata', 400);
-                // }
+                $orderId = $paymentIntent->metadata->orderId;
+                $order =$orderRepository->find($orderId);
 
-                // $order = $orderRepository->find($orderId);
-
-                // if ($order === null) {
-                //     // Optional: Log ou gérer le cas ordre non trouvé en base
-                //     return new Response('Order not found', 404);
-                // }
-
-                // $cartPrice = $order->getTotalPrice();
-                // $stripeTotalAmount = $paymentIntent->amount/100;
-                // if($cartPrice==$stripeTotalAmount){
-                //     $order->setIsPaymentCompleted(1);
-                //     $entityManager->flush();
-                // }
-
+                $cartPrice = $order->getTotalPrice();
+                $stripeTotalAmount = $paymentIntent->amount/100;
+                if($cartPrice==$stripeTotalAmount){
+                    $order->setIsPaymentCompleted(1);
+                    $entityManager->flush();
+                }
+                //file_put_contents($fileName, $orderId);
                 break;
             case 'payment_method.attached':   // Événement de méthode de paiement attachée
                 // Récupérer l'objet payment_method

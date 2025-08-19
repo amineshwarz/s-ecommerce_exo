@@ -1,6 +1,6 @@
 <?php 
 
-namespace App\Service;
+namespace App\service;
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
 
@@ -16,7 +16,7 @@ class StripePayment
         Stripe::setApiVersion('2024-06-20');
     }
 
-    public function startPayment($cart, $shippingCost){
+    public function startPayment($cart, $shippingCost, $orderId){
         //dd($cart);
        // Récupération des produits du panier
        $cartProducts = $cart['cart']; 
@@ -62,9 +62,11 @@ class StripePayment
             'shipping_address_collection' => [
                 'allowed_countries' => ['FR'],
             ],
-            'metadata' => [
-                //'order_id' => $cart->id, //id de la commande
-            ]
+            'payment_intent_data' => [
+                'metadata' => [
+                    'orderId' =>$orderId//id de la commande
+                ]
+                ]
 
         ]);
         $this->redirectUrl = $session->url;
