@@ -102,12 +102,20 @@ final class OrderController extends AbstractController
     }
 
     
-    #[Route('/editor/order', name: 'app_orders_show')]
-    public function getAllOrder(OrderRepository $orderRepository, PaginatorInterface $paginator, Request $request, ProductRepository $productRepository): Response
+    #[Route('/editor/order/{type}', name: 'app_orders_show')]
+    public function getAllOrder($type, OrderRepository $orderRepository, PaginatorInterface $paginator, Request $request, ProductRepository $productRepository): Response
     {
-  
+        if($type == 'is-completed'){
+            $data = $orderRepository->findBy(['isCompleted'=>1],['id'=>'DESC']);
+        }else if($type == 'pay-on-stripe-not-delivered'){
+            $data = $orderRepository->findBy(['isCompleted'=>null,'payOnDelivery'=>0,'isPaymentCompleted'=>1],['id'=>'DESC']);
+        }else if($type == 'pay-on-stripe-is-delivered'){
+            $data = $orderRepository->findBy(['isCompleted'=>1,'payOnDelivery'=>0,'isPaymentCompleted'=>1],['id'=>'DESC']);
+        }else if($type == 'no_delivery'){
+            $data = $orderRepository->findBy(['isCompleted'=>null,'payOnDelivery'=>0,'isPaymentCompleted'=>0],['id'=>'DESC']);
+        }
 
-        $data = $orderRepository->findBy([], ['id' => 'DESC']);
+        
         $orders = $paginator->paginate(
             $data,
             $request->query->getInt('page', 1),
@@ -119,7 +127,7 @@ final class OrderController extends AbstractController
         ]);
     }
     #[Route('editor/order/{id}/is-completed/update', name: 'app_order_is-completed-update')]
-    public function isCompletedUpdate($id, OrderRepository $orderRepository, EntityManagerInterface $em,): Response
+    public function isCompletedUpdate(Request $request, $id, OrderRepository $orderRepository, EntityManagerInterface $em,): Response
     {
         $order = $orderRepository->find($id);
 
@@ -127,7 +135,7 @@ final class OrderController extends AbstractController
         $em->persist($order);
         $em->flush();
         $this->addFlash('success', 'modification effectuée avec succès');
-        return $this->redirectToRoute('app_orders_show');
+        return $this->redirect($request->headers->get('referer'));//cela fait reference a la route precedent cette route ci
     }
 
     #[Route('/editor/order/{id}/remove', name:"app_order_remove")]

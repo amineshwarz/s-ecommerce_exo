@@ -18,12 +18,32 @@
 
             <ul class="navbar-nav align-items-center">
             {% if is_granted("ROLE_ADMIN") %}
-                <li class="nav-item dropdown ">
+                 {# <li class="nav-item dropdown ">
                     <a class="nav-link dropdown-toggle text-light" href="{{ path('app_orders_show')}}" role="button" data-bs-toggle="dropdown">Historique Commandes</a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{{ path('app_orders_show') }}">Voir l'historique</a></li>
                     </ul>
-                </li>
+                </li>  #}
+
+                {# <li class="nav-item dropdown ">
+                    <a class="nav-link dropdown-toggle text-light" href="" role="button" data-bs-toggle="dropdown">Admin</a>
+                </li> #}
+
+                 <!--Menu des commandes-->
+                {% if is_granted("ROLE_EDITOR") %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Commandes
+                    </a>
+                    <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{{ path('app_orders_show',{'type':'is-completed'}) }}">Commandes livrées</a></li>
+                    <li><a class="dropdown-item" href="{{ path('app_orders_show',{'type':'no_delivery'}) }}">Commandes non livrées</a></li>
+                    <li><a class="dropdown-item" href="{{ path('app_orders_show',{'type':'pay-on-stripe-not-delivered'}) }}">Commandes payées en ligne non livrées</a></li>
+                    <li><a class="dropdown-item" href="{{ path('app_orders_show',{'type':'pay-on-stripe-is-delivered'}) }}">Commandes payées en ligne livrées</a></li>
+                    </ul>
+                </li> 
+                {% endif %}
+                 <!--**************************-->
                 <li class="nav-item dropdown ">
                     <a class="nav-link dropdown-toggle text-light" href="{{ path('app_city_index')}}" role="button" data-bs-toggle="dropdown">Cities</a>
                     <ul class="dropdown-menu">
@@ -57,29 +77,29 @@
                 </li>
             {% endif %}
             {% if categories is defined %} 
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle text-light" href="#" id="categoriesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Catégories
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="categoriesDropdown">
-                    {% for categorie in categories %}
-                        <li class="dropdown-submenu  dropend">
-                            <a class="dropdown-item dropdown-toggle" href="#"  role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                {{ categorie.name }}
-                            </a>
-                            {# <ul class="dropdown-menu" > #}
-                            {% for subCategorie in categorie.subCategories %}
-                                <li class="dropdown-submenu position-relative">
-                                    <a class="dropdown-item" href="{{ path('app_home_produit_filter',{'id':subCategorie.id})}}" >{{ subCategorie.name }}</a>
-                                </li>
-                            {% endfor %}
-                            {# </ul> #}
-                        </li>
-                        <li><hr class="dropdown-divider"></h></li>
-                    {% endfor %}
-                    
-                </ul>
-            </li> 
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-light" href="#" id="categoriesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Catégories
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="categoriesDropdown">
+                        {% for categorie in categories %}
+                            <li class="dropdown-submenu  dropend">
+                                <a class="dropdown-item dropdown-toggle" href="#"  role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    {{ categorie.name }}
+                                </a>
+                                {# <ul class="dropdown-menu" > #}
+                                {% for subCategorie in categorie.subCategories %}
+                                    <li class="dropdown-submenu position-relative">
+                                        <a class="dropdown-item" href="{{ path('app_home_produit_filter',{'id':subCategorie.id})}}" >{{ subCategorie.name }}</a>
+                                    </li>
+                                {% endfor %}
+                                {# </ul> #}
+                            </li>
+                            <li><hr class="dropdown-divider"></h></li>
+                        {% endfor %}
+                        
+                    </ul>
+                </li> 
             {% endif %}
                 <li class="nav-item">
                     <a class="nav-link text-light" href="{{ path('app_cart') }}"  role="button" aria-expanded="false">
@@ -98,6 +118,7 @@
                     <a class="btn btn-sm btn-green" href="{{ path('app_login') }}">Connexion</a>
                 </li>
             {% endif %}
+
             </ul>
         </div>
     </div>
