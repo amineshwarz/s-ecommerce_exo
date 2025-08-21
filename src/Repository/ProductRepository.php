@@ -19,13 +19,13 @@ class ProductRepository extends ServiceEntityRepository
     //    /**
     //     * @return Product[] Returns an array of Product objects
     //     */
-    //    public function findByExampleField($value): array
+    //    public function findByIdUp($value): array
     //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('p.id', 'ASC')
-    //            ->setMaxResults(10)
+    //        return $this->createQueryBuilder('p') //retourne la requete
+    //            ->andWhere('p.id > :val') // ajoute des critères val = $value
+    //            ->setParameter('val', $value) // on set les parametres
+    //            ->orderBy('p.id', 'ASC') // on definit les criteres
+    //            ->setMaxResults(10) //definit le nbr de resultat
     //            ->getQuery()
     //            ->getResult()
     //        ;
@@ -40,4 +40,15 @@ class ProductRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function searchEngine (string $query) 
+       {
+           return $this->createQueryBuilder('p') // Crée un objet de requête qui permet de construire la requête recherche
+               ->Where('p.Name LIKE :query') // Recherche les éléménts dont le nom contient la reqête de recherche 
+               ->orWhere('p.description LIKE :query') // ou rechercher les élées dont la desciption contient la requete de recherche 
+               ->setParameter('query', '%' . $query . '%') // Défini la valeur de la variable "query" pour la requete
+               ->getQuery() // Éxecute la reqête et récupère les résultats
+               ->getResult()
+           ;
+       }
 }

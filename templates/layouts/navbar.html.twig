@@ -120,7 +120,14 @@
             {% endif %}
 
             </ul>
+            <!-- Ajout de la barre de recherche -->
+            <form class="d-flex ms-3" role="search" method="get" action="{{ path('app_search_engine') }}">
+                <input class="form-control me-2 bg-white" type="search" placeholder="Rechercher..." aria-label="Search" name="word" >
+                <button class="btn btn-sm btn-outline-light" type="submit">Recherche</button>
+            </form>
         </div>
+
     </div>
+    
 </nav>
 

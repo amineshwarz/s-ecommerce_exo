@@ -139,13 +139,13 @@ final class OrderController extends AbstractController
     }
 
     #[Route('/editor/order/{id}/remove', name:"app_order_remove")]
-    public function removeOrder (Order $order, EntityManagerInterface $em): Response
+    public function removeOrder (Order $order, EntityManagerInterface $em, Request $request): Response
     {
         $em->remove($order);
         // dd($order);
         $em->flush();
         $this->addFlash('success', 'La commande a été supprimée avec succès');
-        return $this->redirectToRoute('app_orders_show');
+        return $this->redirect($request->headers->get('referer'));
     }
 }
 
