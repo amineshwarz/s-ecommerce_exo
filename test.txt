@@ -81,17 +81,10 @@ final class StripController extends AbstractController
                     $order->setIsPaymentCompleted(1);
                     $entityManager->flush();
                 }
-                // file_put_contents( 'test.txt', 'before foreach\n', FILE_APPEND);
-                foreach ($order->getOrderProducts() as $orderProducts) {
-                    $product = $orderProducts->getProduct();
-                    $newStock = $product->getStock() - $orderProducts->getQte();
-                
-                    if ($newStock < 0) {
-                        return new Response('Stock insuffisant pour le produit ID: ' . $product->getId(), 400);
-                    }
-                
-                    $product->setStock($newStock);
-                    $entityManager->persist($product); // Persist pour s'assurer que Doctrine suit les changements
+                file_put_contents( 'test.txt', 'before foreach\n', FILE_APPEND);
+                foreach($order-> getOrderProducts() as $orderProducts){
+                    file_put_contents( 'test.txt', 'in foreach\n', FILE_APPEND);
+                    $orderProducts->getProduct()->setStock(intval($orderProducts->getProduct()->getStock() - $orderProducts->getQte()));
                     $entityManager->flush();
                 }
                 
@@ -110,15 +103,15 @@ final class StripController extends AbstractController
         return new Response('Événement reçu avec succès', 200);
     }
 }
-// foreach ($order->getOrderProducts() as $orderProducts) {
-//     $product = $orderProducts->getProduct();
-//     $newStock = $product->getStock() - $orderProducts->getQuantity();
+foreach ($order->getOrderProducts() as $orderProducts) {
+    $product = $orderProducts->getProduct();
+    $newStock = $product->getStock() - $orderProducts->getQuantity();
 
-//     if ($newStock < 0) {
-//         return new Response('Stock insuffisant pour le produit ID: ' . $product->getId(), 400);
-//     }
+    if ($newStock < 0) {
+        return new Response('Stock insuffisant pour le produit ID: ' . $product->getId(), 400);
+    }
 
-//     $product->setStock($newStock);
-//     $entityManager->persist($product); // Persist pour s'assurer que Doctrine suit les changements
-//     $entityManager->flush();
-// }
+    $product->setStock($newStock);
+    $entityManager->persist($product); // Persist pour s'assurer que Doctrine suit les changements
+}
+$entityManager->flush();

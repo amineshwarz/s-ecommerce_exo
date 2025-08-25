@@ -17,26 +17,31 @@ class OrderType extends AbstractType
             ->add('firstName', null, [
                 'attr' => [
                     'class' => 'form form-control',
+                    'value' => 'v'
                 ],
             ])
             ->add('lastName', null, [
                 'attr' => [
                     'class' => 'form form-control',
+                    'value' => 'v'
                 ],
             ])  
             ->add('email', null, [
                 'attr' => [
                     'class' => 'form form-control',
+                    'value' => 'v'
                 ],
             ])           
             ->add('phone', null, [
                 'attr' => [
                     'class' => 'form form-control',
+                    'value' => '0'
                 ],
             ])            
             ->add('adresse', null, [
                 'attr' => [
                     'class' => 'form form-control',
+                    'value' => 'v'
                 ],
             ])
             // ->add('createdAt', null, [
@@ -47,6 +52,7 @@ class OrderType extends AbstractType
                 'choice_label' => 'name',
                 'attr' => [
                     'class' => 'form form-control',
+                    'value' => 'v'
                 ],
             ])
             ->add('payOnDelivery', null,[

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Product;
 use App\service\Cart;
 use App\Repository\ProductRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,17 +33,39 @@ final class CartController extends AbstractController
     }
 
     #[Route('/cart/add/{id}', name: 'app_cart_add', methods:['GET'])]
-    public function addProductToCart(int $id,SessionInterface $session): Response
+    public function addProductToCart(int $id,SessionInterface $session, Product $product): Response
     {
+        
         $cart =$session->get('cart', []); // Récupère les données du panier en session, ou un empty table
-        if (!empty($cart[$id])){
-            $cart[$id]++;
-        }else{
-            $cart[$id]=1; 
-        } // si le produit est déja dans le panier, incremente sa quantité, sinon ajouté
-        $session->set('cart', $cart); // met a jour le panier dans la session
+        
+        // if(!isset($cart[$id]) && $product-> getStock() > 0 || $cart[$id] < $product-> getStock() ){
+        //     if (!empty($cart[$id])){
+        //         $cart[$id]++;
+        //     }else{
+        //         $cart[$id]=1; 
+        //     } // si le produit est déja dans le panier, incremente sa quantité, sinon ajouté
+        // }else{
+        //     $this->addFlash('danger', 'Vous avez atteint la quantité maximale disponible pour ce produit.');
+        //     return $this->redirectToRoute('app_home_page');
+        // }
+        if (!isset($cart[$id])) {
+            if ($product->getStock() > 0) {
+                $cart[$id] = 1; // Ajouter le produit au panier avec une quantité de 1
+            } else {
+                $this->addFlash('danger', 'Le produit est en rupture de stock.');
+                return $this->redirectToRoute('app_home_page');
+            }
+        } elseif ($cart[$id] < $product->getStock()) {
+            $cart[$id]++; // Incrémenter la quantité si elle est inférieure au stock disponible
+        } else {
+            $this->addFlash('danger', 'Vous avez atteint la quantité maximale disponible pour ce produit.');
+            return $this->redirectToRoute('app_home_page');
+        }
 
+        $session->set('cart', $cart); // Met à jour le panier en session
+        $this->addFlash('success', 'Le produit a été ajouté au panier avec succès.');
         return $this->redirectToRoute('app_cart');
+        
     }
 
     #[Route('cart/delete/{id}', name: 'app_cart_delete', methods: ['GET'])]
