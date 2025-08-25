@@ -21,11 +21,17 @@
 
         {% for item in items %}
             <tr>
-                <td scope="row" class="text-center"> {{ item.product.name }} </td>
-                <td scope="row" class="">{{ item.product.prix }} €</td>
-                <td scope="row" class="fw-lighter">{{ item.quantity }}  </td> 
+                <td scope="row" class="text-center fw-lighter"> {{ item.product.name }} </td>
+                <td scope="row" class="fw-lighter">{{ item.product.prix }} €</td>
+                <td scope="row" class="fw-lighter">
+                    <a href="{{ path('app_cart_add', {'id': item.product.id}) }}" class="btn btn-xs btn-outline-green" title="Augmenter la quantité">+</a>
+                    {{ item.quantity }}  
+                    <a href="{{ path('app_cart_decrease', {'id': item.product.id}) }}" class="btn btn-xs btn-outline-green" title="Diminuer la quantité">-</a>
+                </td> 
                 <td scope="row" class="fw-lighter text-center">{{ item.product.prix * item.quantity }} €</td>
                 <td scope="row" class="fw-lighter text-center">
+
+                    
                      <a href="{{ path('app_cart_delete',{'id':item.product.id})}}" class="btn btn-xs" onclick="return confirm('Es-tu sûr de vouloir supprimer cet élément de votr panier ?');">❌</a> 
                 </td> 
             </tr>

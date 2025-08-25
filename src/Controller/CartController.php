@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 
 final class CartController extends AbstractController
 {
@@ -33,7 +34,7 @@ final class CartController extends AbstractController
     }
 
     #[Route('/cart/add/{id}', name: 'app_cart_add', methods:['GET'])]
-    public function addProductToCart(int $id,SessionInterface $session, Product $product): Response
+    public function addProductToCart(int $id,SessionInterface $session, Product $product, Request $request): Response
     {
         
         $cart =$session->get('cart', []); // Récupère les données du panier en session, ou un empty table
@@ -64,7 +65,20 @@ final class CartController extends AbstractController
 
         $session->set('cart', $cart); // Met à jour le panier en session
         $this->addFlash('success', 'Le produit a été ajouté au panier avec succès.');
-        return $this->redirectToRoute('app_cart');
+
+        // ------------------------ Redirection a condition de l'url precedente ------------------------ 
+        
+        // Récupérer l’URL précédente (referer)
+        $referer = $request->headers->get('referer'); // Cette URL sert à savoir d’où vient la requête (par exemple, page panier ou page d’accueil).
+
+        if ($referer) { // Vérifie si une URL référente a bien été trouvée (elle peut être absente selon le navigateur ou contexte).
+            // Exemple simplifié: si l’URL contient "/cart" on reste dans le panier
+            if (str_contains($referer, '/cart')) { // La fonction str_contains retourne vrai si cette sous-chaîne est présente dans l’URL référente.
+                return $this->redirectToRoute('app_cart'); // Cela permet de rester sur la page panier après l’opération.
+            }
+        }
+        // Par défaut, redirige vers la page d’accueil
+        return $this->redirectToRoute('app_home_page');
         
     }
 
@@ -93,5 +107,25 @@ final class CartController extends AbstractController
         return $this->redirectToRoute('app_cart');
     }
 
+    #[Route('/cart/decrease/{id}', name: 'app_cart_decrease', methods:['GET'])]
+    public function decreaseProductQuantity(int $id, SessionInterface $session): Response
+    {
+        $cart = $session->get('cart', []); //Récupère le contenu actuel du panier depuis la session sous la clé 'cart'.
+
+        if (isset($cart[$id])) { // Vérifie si le produit avec l'ID fourni existe déjà dans le panier.
+            if ($cart[$id] > 1) { // Vérifie si la quantité de ce produit dans le panier est supérieure à 1.
+                $cart[$id]--; // Diminue la quantité du produit dans le panier de 1 unité.
+            } else { // Si la quantité était égale à 1, alors la décrémenter reviendrait à 0, donc on choisit de supprimer complètement ce produit du panier avec unset.
+                unset($cart[$id]); 
+            }
+            $session->set('cart', $cart); // Met à jour le panier dans la session utilisateur avec la nouvelle version modifiée (quantité diminuée ou produit supprimé).
+            $this->addFlash('success', 'La quantité du produit a été diminuée.');
+        } else {
+            $this->addFlash('danger', 'Ce produit n\'est pas dans le panier.');
+        }
+
+        return $this->redirectToRoute('app_cart');
+    }
 
 }
+ // creation d'une route qui permet de retourner sur le panier quans on ajoute un article demander un quantin si on est obliger ou bien dans la route en haut en peut faire une condition 

@@ -178,3 +178,61 @@ final class ProductController extends AbstractController
         ]);
     }  
 }
+
+//#[Route('/remove/product/{id}', name: 'app_product_stock_remove')]
+// public function stockRemove(Product $product, EntityManagerInterface $em, Request $request): Response
+// {
+//     $stockRemove = new RemoveProductHistory(); // Entité similaire à AddProductHistory, mais pour les retraits
+//     $form = $this->createForm(RemoveStockProductFormType::class, $stockRemove);
+//     $form->handleRequest($request);
+//     if ($form->isSubmitted() && $form->isValid()) {
+//         $quantityToRemove = $stockRemove->getQuantity();
+//         if ($quantityToRemove > 0) {
+//             if ($product->getStock() >= $quantityToRemove) {
+//                 $newQuantity = $product->getStock() - $quantityToRemove;
+//                 $product->setStock($newQuantity);
+
+//                 $stockRemove->setCreatedAt(new \DateTimeImmutable());
+//                 $stockRemove->setProduct($product);
+//                 $em->persist($stockRemove);
+//                 $em->flush();
+
+//                 return $this->redirectToRoute('app_product_show', ['id' => $product->getId()]);
+//             } else {
+//                 $this->addFlash('danger', 'La quantité à retirer est supérieure au stock disponible.');
+//                 return $this->redirectToRoute('app_product_stock_remove', ['id' => $product->getId()]);
+//             }
+//         } else {
+//             $this->addFlash('danger', 'La quantité doit être supérieure à 0.');
+//             return $this->redirectToRoute('app_product_stock_remove', ['id' => $product->getId()]);
+//         }
+//     }
+//     return $this->render('product/removeStock.html.twig', [
+//         'product' => $product,
+//         'form' => $form->createView(),
+//     ]);
+// }
+
+//Explications
+
+// La route est accessible via /remove/product/{id}.
+
+// Une nouvelle entité RemoveProductHistory (à créer) conservera l'historique des retraits de stock.
+
+// Le formulaire RemoveStockProductFormType demande la quantité à retirer.
+
+// La quantité doit être positive et ne peut pas être supérieure au stock actuel.
+
+// En cas de validation, la quantité est soustraite du stock du produit.
+
+// En cas d'erreur (quantité invalide ou insuffisante), un message d'erreur est affiché et la page reste sur le formulaire.
+
+// Étapes complémentaires à réaliser
+
+// Créer l'entité RemoveProductHistory (similaire à AddProductHistory).
+
+// Créer le formulaire RemoveStockProductFormType (similaire à AddStockProductFormType).
+
+// Créer le template Twig removeStock.html.twig (similaire à addStock.html.twig).
+
+// Ainsi, vous aurez une fonctionnalité symétrique pour diminuer le stock comme pour l'ajouter.
