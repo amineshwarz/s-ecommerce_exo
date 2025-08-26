@@ -18,16 +18,18 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+#[IsGranted('ROLE_EDITOR')]
 final class OrderController extends AbstractController
 {
     public function __construct(private MailerInterface $mailer)
     {
     }
 
-    #[Route('/order', name: 'app_order')]
+    #[Route('/editor/order', name: 'app_order')]
     public function index(Request $request, SessionInterface $session, EntityManagerInterface $em, Cart $cart): Response
     {
         $data = $cart->getCart($session); //Récupére les données du panier a partir de la session 

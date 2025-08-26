@@ -1,7 +1,7 @@
-{% for type, messages in app.flashes(['success','danger','info'])%}
-    {% for message in messages %}
+ {% for type, messages in app.flashes(['success','danger','info'])%} {# Parcourt chaque catégorie de messages (success, danger, info). #}
+     {% for message in messages %}  {# Affiche chaque message de la catégorie dans une balise <div>. #}
         <div class='col-md-12 mx-auto mt-2'>
-            <div class="alert alert-{{ type }} alert-dismissible fade show" role="alert">
+            <div class="alert alert-{{ type }} alert-dismissible fade show" role="alert"> {# Alert Alert applique le style correspondant (vert pour success, rouge pour danger, bleu pour info…). Alert dismissible permettent de gérer l’affichage et la transition de disparition des alertes. #}
                 {{ message }}
              </div>
         </div>
@@ -10,11 +10,14 @@
 
 
 <script>
-        document.querySelectorAll('.alert-dismissible').forEach(function(message) {
+        document.querySelectorAll('.alert-dismissible').forEach(function(message) { //sélectionne toutes les alertes affichées. pour chaque alerte…
             setTimeout(function() {
-                message.style.transition = "opacity 0.5s ease";
-                message.style.opacity = "0";
-                setTimeout(() => message.remove(), 500);
-            }, 2000);
+                message.style.transition = "opacity 0.5s ease"; // définit une animation CSS pour l’opacité.
+                message.style.opacity = "0";  // fait disparaître progressivement l’alerte (transition vers transparent).
+                setTimeout(() => message.remove(), 500); // après 0,5 s (durée de la transition), l’élément est supprimé du DOM.
+            }, 2000); // au bout de 2 secondes, on applique ce qui est en haut
         });
 </script>   
+
+{# Résumé:
+Ce code permet d'afficher des messages flash Bootstrap dans une application Flask et de les faire disparaître automatiquement au bout de 2 secondes avec un effet de fondu avant suppression complète. #}
