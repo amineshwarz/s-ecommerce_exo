@@ -22,8 +22,9 @@
 - M : Contat (mention legal), Accebilité.
 - S : Gestion du stock. metadsciption pour seo
 - C : gestion de stock quand le client pay un produit ca reduit du stock
--  messge d'erreur quand le produit est en repture de stock
-- modifier la quantité de produit dans le panier pour les utilisateur
-- dans les produit on a que ajouté le stock on peut pas deminuer 
+
+- messge d'erreur quand le produit est en repture de stock. (done)
+- modifier la quantité de produit dans le panier pour les utilisateur (done)
+- dans les produit on a que ajouté le stock on peut pas deminuer  (done)
 
    192.168.50.10:8000
